@@ -12,4 +12,23 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    // todo fill out values correctly, most were taken from the examples
+
+    // Drivetrain
+    public static final double maxSpeed = 3.0;  // 3 meters per second
+    public static final double maxAngularSpeed = Math.PI;  // 1/2 rotation per second
+
+    // SwerveModule
+    public static final double wheelRadius = 0.0508;
+    public static final int encoderResolution = 4096;
+  
+    public static final double moduleMaxAngularVelocity = Constants.maxAngularSpeed;
+    public static final double moduleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
+
+
+    // Joystick layout
+    public static final int fieldOrientedDriveToggle = 5;
+    
+
+}
