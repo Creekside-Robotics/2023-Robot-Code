@@ -22,6 +22,7 @@ public final class Constants {
     // SwerveModule
     public static final double wheelRadius = 0.0508;
     public static final int encoderResolution = 4096;
+    public static final double gearRatio = 10;
   
     public static final double moduleMaxAngularVelocity = Constants.maxAngularSpeed;
     public static final double moduleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
@@ -29,6 +30,5 @@ public final class Constants {
 
     // Joystick layout
     public static final int fieldOrientedDriveToggle = 5;
-    
 
 }

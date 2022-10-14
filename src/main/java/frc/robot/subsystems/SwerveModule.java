@@ -64,14 +64,14 @@ public class SwerveModule {
     this.m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     this.m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
 
-    this.m_driveEncoder = this.m_driveMotor.getEncoder()
+    this.m_driveEncoder = this.m_driveMotor.getEncoder();
     this.m_turningEncoder = new Encoder(turningEncoderChannelA, turningEncoderChannelB);
 
     // Set the distance per pulse for the drive encoder. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
     // resolution.
     m_driveEncoder.setPositionConversionFactor(2 * Math.PI * Constants.wheelRadius / Constants.gearRatio);
-    m_driveEncoder.setVelocityConversionFactor(2 * Math.PI * Constants.wheelRadius / Constants.gearRatio)
+    m_driveEncoder.setVelocityConversionFactor(2 * Math.PI * Constants.wheelRadius / Constants.gearRatio);
 
     // Set the distance (in this case, angle) per pulse for the turning encoder.
     // This is the the angle through an entire rotation (2 * pi) divided by the
