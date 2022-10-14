@@ -12,11 +12,11 @@ import frc.robot.Constants;
 /*** Create a new swerve drive style drivetrain */
 public class Drivetrain  extends SubsystemBase{
 
-    // Should these be in the constants class?
-    private Translation2d frontLeftLocation;
-    private Translation2d frontRightLocation;
-    private Translation2d backLeftLocation;
-    private Translation2d backRightLocation;
+    // Should these be in the constants class? Yes
+    private Translation2d frontLeftLocation = new Translation2d(1, 1);
+    private Translation2d frontRightLocation = new Translation2d(1, -1);
+    private Translation2d backLeftLocation = new Translation2d(-1, 1);
+    private Translation2d backRightLocation = new Translation2d(-1, -1);
 
     private SwerveModule frontLeft;
     private SwerveModule frontRight;
