@@ -71,4 +71,8 @@ public class Drivetrain  extends SubsystemBase{
             backRight.getState());
     }
 
+    public void resetGyro() {
+        this.gyro.reset();
+    }
+
 }
