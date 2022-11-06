@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.ResetGyro;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.SwerveModule;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,8 +21,13 @@ import frc.robot.subsystems.Drivetrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   Joystick joystick = new Joystick(1);
+  
+  private SwerveModule frontRight = new SwerveModule(1, 2, 1);
+  private SwerveModule frontLeft = new SwerveModule(3, 4, 2);
+  private SwerveModule backRight = new SwerveModule(5, 6, 3);
+  private SwerveModule backLeft = new SwerveModule(7, 8, 4);
 
-  private Drivetrain drivetrain = new Drivetrain();
+  private Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft);
   private ResetGyro resetCommand = new ResetGyro(drivetrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */

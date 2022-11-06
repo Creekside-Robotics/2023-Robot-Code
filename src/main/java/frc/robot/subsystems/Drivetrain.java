@@ -13,10 +13,10 @@ import frc.robot.Constants;
 public class Drivetrain  extends SubsystemBase{
 
     // Should these be in the constants class? Yes
-    private Translation2d frontLeftLocation = new Translation2d(1, 1);
-    private Translation2d frontRightLocation = new Translation2d(1, -1);
-    private Translation2d backLeftLocation = new Translation2d(-1, 1);
-    private Translation2d backRightLocation = new Translation2d(-1, -1);
+    private Translation2d frontLeftLocation = new Translation2d(0.368, 0.368);
+    private Translation2d frontRightLocation = new Translation2d(0.368, -0.368);
+    private Translation2d backLeftLocation = new Translation2d(-0.368, 0.368);
+    private Translation2d backRightLocation = new Translation2d(-0.368, -0.368);
 
     private SwerveModule frontLeft;
     private SwerveModule frontRight;
@@ -27,7 +27,12 @@ public class Drivetrain  extends SubsystemBase{
     private SwerveDriveKinematics kinematics;
     private SwerveDriveOdometry odometry;
 
-    public Drivetrain() {
+    public Drivetrain(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft) {
+        this.frontRight = frontRight;
+        this.frontLeft = frontLeft;
+        this.backRight = backRight;
+        this.backLeft = backLeft;
+        
         gyro = new ADXRS450_Gyro();
         gyro.reset();
 
