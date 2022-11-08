@@ -20,7 +20,7 @@ import frc.robot.subsystems.SwerveModule;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  Joystick joystick = new Joystick(1);
+  Joystick joystick = new Joystick(0);
   
   private SwerveModule frontRight = new SwerveModule(1, 2, 1);
   private SwerveModule frontLeft = new SwerveModule(3, 4, 2);
