@@ -21,6 +21,12 @@ Certain branches are protected by rules that must be obeyed
 
 - `dev` - All changes to code that effect robot functionality are expected to be merged to `dev`, not `main`. 
 - `main` - `dev` can be merged into `main` once code has been succesfully tested on robot. All other changes can be merged via pull request from created branch.
+
+## Running Unit Tests
+Unit tests can be run from the command line by using the gradle test task.\
+If you are on Windows: `.\gradlew.bat clean test`\
+If you are on Linux: `.\gradlew clean test`
+
 ## Resolving Merge Conflicts
 
 See something like this?
