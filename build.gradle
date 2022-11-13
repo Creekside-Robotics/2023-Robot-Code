@@ -68,6 +68,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
 }
 
+test {
+   useJUnit()
+}
+
 // Simulation configuration (e.g. environment variables).
 wpi.sim.addGui().defaultEnabled = true
 wpi.sim.addDriverstation()
