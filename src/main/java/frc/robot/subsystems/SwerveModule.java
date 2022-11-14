@@ -54,6 +54,7 @@ public class SwerveModule {
       int turningEncoderChannel) {
 
     this.m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
+    this.m_driveMotor.setInverted(true);
     this.m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
 
     this.m_driveEncoder = this.m_driveMotor.getEncoder();
