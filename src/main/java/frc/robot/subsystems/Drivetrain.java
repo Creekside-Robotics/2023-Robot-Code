@@ -12,12 +12,6 @@ import frc.robot.Constants;
 /*** Create a new swerve drive style drivetrain */
 public class Drivetrain  extends SubsystemBase{
 
-    // Should these be in the constants class? Yes
-    private Translation2d frontLeftLocation = new Translation2d(0.368, 0.368);
-    private Translation2d frontRightLocation = new Translation2d(0.368, -0.368);
-    private Translation2d backLeftLocation = new Translation2d(-0.368, 0.368);
-    private Translation2d backRightLocation = new Translation2d(-0.368, -0.368);
-
     private SwerveModule frontLeft;
     private SwerveModule frontRight;
     private SwerveModule backLeft;
@@ -37,10 +31,10 @@ public class Drivetrain  extends SubsystemBase{
         gyro.reset();
 
         kinematics = new SwerveDriveKinematics(
-            frontLeftLocation,
-            frontRightLocation,
-            backLeftLocation,
-            backRightLocation
+            Constants.frontLeftLocation,
+            Constants.frontRightLocation,
+            Constants.backLeftLocation,
+            Constants.backRightLocation
         );
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
     }

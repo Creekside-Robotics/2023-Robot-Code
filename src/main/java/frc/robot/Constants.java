@@ -31,4 +31,13 @@ public final class Constants {
     // Joystick layout
     public static final int fieldOrientedDriveToggle = 5;
 
+    // Movement scalars
+    public static final int joystickSpeedScalar = 3;
+    public static final int joystickRotScalar = 2;
+
+    // Wheel locations
+    public static final Translation2d frontLeftLocation = new Translation2d(0.368, 0.368);
+    public static final Translation2d frontRightLocation = new Translation2d(0.368, -0.368);
+    public static final Translation2d backLeftLocation = new Translation2d(-0.368, 0.368);
+    public static final Translation2d backRightLocation = new Translation2d(-0.368, -0.368);
 }

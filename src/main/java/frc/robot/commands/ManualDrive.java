@@ -39,9 +39,9 @@ public class ManualDrive extends CommandBase {
     // Translation2d joystickVector = new Translation2d(-this.joystick.getY(), -this.joystick.getX());
 
     // working under the assumption that the coordinates are still different
-    double xSpeed = -this.joystick.getY() * 3;
-    double ySpeed = -this.joystick.getX() * 3;
-    double rotSpeed = -this.joystick.getTwist() * 2;
+    double xSpeed = -this.joystick.getY() * Constants.joystickSpeedScalar;
+    double ySpeed = -this.joystick.getX() * Constants.joystickSpeedScalar;
+    double rotSpeed = -this.joystick.getTwist() * Constants.joystickRotScalar;
 
     if (this.joystick.getRawButtonPressed(Constants.fieldOrientedDriveToggle)) {  // only toggle when the button is pressed and not held
       this.fieldOriented = !this.fieldOriented;  // invert the toggle
