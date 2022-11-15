@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -36,7 +35,7 @@ public class SwerveModule {
               Constants.moduleMaxAngularVelocity, Constants.moduleMaxAngularAcceleration));
 
   // Gains are for example purposes only - must be determined for your own robot!
-  private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(1, 3);
+  private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(0, 3);
 
   /**
    * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
@@ -54,8 +53,8 @@ public class SwerveModule {
       int turningEncoderChannel) {
 
     this.m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
-    this.m_driveMotor.setInverted(true);
     this.m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
+    this.m_turningMotor.setInverted(true);
 
     this.m_driveEncoder = this.m_driveMotor.getEncoder();
     this.m_turningEncoder = new CANCoder(turningEncoderChannel);
