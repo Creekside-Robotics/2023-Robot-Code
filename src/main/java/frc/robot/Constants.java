@@ -31,7 +31,7 @@ public final class Constants {
 
 
     // Joystick layout
-    public static final int fieldOrientedDriveToggle = 5;
+    public static final int fieldOrientedDriveToggle = 3;
 
     // Movement scalars
     public static final int joystickSpeedScalar = 1;

@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ManualDrive;
@@ -20,7 +20,7 @@ import frc.robot.subsystems.SwerveModule;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  Joystick joystick = new Joystick(0);
+  XboxController xboxController = new XboxController(0);
   
   private SwerveModule frontRight = new SwerveModule(1, 2, 1);
   private SwerveModule frontLeft = new SwerveModule(3, 4, 2);
@@ -43,8 +43,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    this.drivetrain.setDefaultCommand(new ManualDrive(this.drivetrain, this.joystick));
-    var resetButton = new JoystickButton(joystick, 11);
+    this.drivetrain.setDefaultCommand(new ManualDrive(this.drivetrain, this.xboxController));
+    var resetButton = new JoystickButton(xboxController, 4);
     resetButton.whenPressed(this.resetCommand);
   }
 

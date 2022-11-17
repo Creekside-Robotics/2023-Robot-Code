@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -13,7 +13,7 @@ import frc.robot.subsystems.Drivetrain;
 /** Drive the robot with the joystick. Adapted from the mechanum drive  */
 public class ManualDrive extends CommandBase {
   private Drivetrain drivetrain;
-  private Joystick joystick;
+  private XboxController xboxController;
   private boolean fieldOriented;
 
   /** 
@@ -22,9 +22,9 @@ public class ManualDrive extends CommandBase {
    * @param drivetrain The drivetrain moving the robot
    * @param joystick The joystick controlling the movement
    */
-  public ManualDrive(Drivetrain drivetrain, Joystick joystick) {
+  public ManualDrive(Drivetrain drivetrain, XboxController xboxController) {
     this.drivetrain = drivetrain;
-    this.joystick = joystick;
+    this.xboxController = xboxController;
     this.fieldOriented = false;  // start as relative driving
 
     // todo ask if it should start as relative driving or not
@@ -39,11 +39,11 @@ public class ManualDrive extends CommandBase {
     // Translation2d joystickVector = new Translation2d(-this.joystick.getY(), -this.joystick.getX());
 
     // working under the assumption that the coordinates are still different
-    double xSpeed = -this.joystick.getY() * Constants.joystickSpeedScalar;
-    double ySpeed = -this.joystick.getX() * Constants.joystickSpeedScalar;
-    double rotSpeed = -this.joystick.getTwist() * Constants.joystickRotScalar;
+    double xSpeed = -this.xboxController.getLeftY() * Constants.joystickSpeedScalar;
+    double ySpeed = -this.xboxController.getLeftX() * Constants.joystickSpeedScalar;
+    double rotSpeed = -this.xboxController.getRightX() * Constants.joystickRotScalar;
 
-    if (this.joystick.getRawButtonPressed(Constants.fieldOrientedDriveToggle)) {  // only toggle when the button is pressed and not held
+    if (this.xboxController.getRawButtonPressed(Constants.fieldOrientedDriveToggle)) {  // only toggle when the button is pressed and not held
       this.fieldOriented = !this.fieldOriented;  // invert the toggle
 
       SmartDashboard.putString(  // update the dashboard
