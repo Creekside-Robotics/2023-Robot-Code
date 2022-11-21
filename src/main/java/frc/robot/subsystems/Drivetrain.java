@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -7,6 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import java.util.ArrayList;
 
 /*** Create a new swerve drive style drivetrain */
 public class Drivetrain  extends SubsystemBase{
@@ -50,7 +52,7 @@ public class Drivetrain  extends SubsystemBase{
         SwerveModuleState[] swerveModuleStates =
             kinematics.toSwerveModuleStates(
                 fieldRelative
-                    ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
+                    ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, this.odometry.getPoseMeters().getRotation())
                     : new ChassisSpeeds(xSpeed, ySpeed, rot));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.maxSpeed);
         frontLeft.setDesiredState(swerveModuleStates[0]);
@@ -73,4 +75,26 @@ public class Drivetrain  extends SubsystemBase{
         this.gyro.reset();
     }
 
+    public void setPose(Pose2d pose) {
+        this.odometry.resetPosition(pose, this.gyro.getRotation2d());
+    }
+
+    public Pose2d getPose() {
+        return this.odometry.getPoseMeters();
+    }
+    
+    public ChassisSpeeds getKinematics() {
+        var modules = new ArrayList<SwerveModule>();
+        modules.add(frontLeft);
+        modules.add(frontRight);
+        modules.add(backLeft);
+        modules.add(backRight);
+
+        var states = new ArrayList<SwerveModuleState>();
+        modules.forEach((module) -> {
+            states.add(module.getState());
+        });
+
+        return kinematics.toChassisSpeeds((SwerveModuleState[]) states.toArray());
+    }
 }
