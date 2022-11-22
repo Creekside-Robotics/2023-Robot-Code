@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /*** Create a new swerve drive style drivetrain */
 public class Drivetrain  extends SubsystemBase{
@@ -84,17 +85,8 @@ public class Drivetrain  extends SubsystemBase{
     }
     
     public ChassisSpeeds getKinematics() {
-        var modules = new ArrayList<SwerveModule>();
-        modules.add(frontLeft);
-        modules.add(frontRight);
-        modules.add(backLeft);
-        modules.add(backRight);
-
-        var states = new ArrayList<SwerveModuleState>();
-        modules.forEach((module) -> {
-            states.add(module.getState());
-        });
-
-        return kinematics.toChassisSpeeds((SwerveModuleState[]) states.toArray());
+        var modules = new ArrayList<SwerveModule>(Arrays.asList(frontLeft, frontRight, backLeft, backRight));
+        var states = (SwerveModuleState[]) modules.stream().map(module -> module.getState()).toArray();
+        return kinematics.toChassisSpeeds(states);
     }
 }
