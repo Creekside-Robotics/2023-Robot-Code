@@ -22,24 +22,35 @@ public final class Constants {
     public static final double maxAngularSpeed = Math.PI;  // 1/2 rotation per second
 
     // SwerveModule
-    public static final double wheelRadius = 0.0508;
-    public static final int encoderResolution = 4096;
-    public static final double gearRatio = 10;
-  
-    public static final double moduleMaxAngularVelocity = Constants.maxAngularSpeed;
-    public static final double moduleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
+    public static final double wheelDiameter = 0.098;
+    public static final double gearRatio = 1/8.14;
+    public static final double wheelCircumference = Math.PI * wheelDiameter;
 
+    // Drive-motor Constants
+    public static final double driveKs = 0.0888;
+    public static final double driveKv = 0.1214 / gearRatio / wheelCircumference;
+    public static final double driveKa = 0.00314 / gearRatio / wheelCircumference;
+    public static final double driveKp = 0.066178 / gearRatio / wheelCircumference;
+    public static final double driveKd = 0;
+    public static final double driveKi = 0;
+
+    //Turn motor Constants
+    public static final double turnKs = 0.0807;
+    public static final double turnKv = 2.5952 / (2*Math.PI);
+    public static final double turnKa = 0.0849 / (2*Math.PI);
+    public static final double turnKp = 1.7544 / (2*Math.PI);
+    public static final double turnKd = 0;
+    public static final double turnKi = 0;
+
+    public static final double moduleMaxAngularVelocity = 2 * Math.PI;
+    public static final double moduleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
 
     // Joystick layout
     public static final int fieldOrientedDriveToggle = 3;
 
-    // Movement scalars
-    public static final int joystickSpeedScalar = 1;
-    public static final int joystickRotScalar = 1;
-
     // Wheel locations
-    public static final Translation2d frontLeftLocation = new Translation2d(0.368, 0.368);
-    public static final Translation2d frontRightLocation = new Translation2d(0.368, -0.368);
-    public static final Translation2d backLeftLocation = new Translation2d(-0.368, 0.368);
-    public static final Translation2d backRightLocation = new Translation2d(-0.368, -0.368);
+    public static final Translation2d frontLeftLocation = new Translation2d(0.3115, 0.3115);
+    public static final Translation2d frontRightLocation = new Translation2d(0.3115, -0.3115);
+    public static final Translation2d backLeftLocation = new Translation2d(-0.3115, 0.3115);
+    public static final Translation2d backRightLocation = new Translation2d(-0.3115, -0.3115);
 }
