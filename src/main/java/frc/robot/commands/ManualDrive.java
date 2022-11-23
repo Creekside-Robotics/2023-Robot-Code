@@ -39,8 +39,8 @@ public class ManualDrive extends CommandBase {
     // Translation2d joystickVector = new Translation2d(-this.joystick.getY(), -this.joystick.getX());
 
     // working under the assumption that the coordinates are still different
-    double xSpeed = -this.xboxController.getLeftY() * Constants.maxSpeed;
-    double ySpeed = -this.xboxController.getLeftX() * Constants.maxSpeed;
+    double xSpeed = -this.xboxController.getLeftY() * Constants.maxTranslationalSpeed;
+    double ySpeed = -this.xboxController.getLeftX() * Constants.maxTranslationalSpeed;
     double rotSpeed = -this.xboxController.getRightX() * Constants.maxAngularSpeed;
 
     if (this.xboxController.getRawButtonPressed(Constants.fieldOrientedDriveToggle)) {  // only toggle when the button is pressed and not held

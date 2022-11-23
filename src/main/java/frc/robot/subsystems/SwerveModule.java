@@ -42,7 +42,7 @@ public class SwerveModule {
               Constants.moduleMaxAngularVelocity, Constants.moduleMaxAngularAcceleration));
 
   // Gains are for example purposes only - must be determined for your own robot!
-  private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(Constants.driveKs, Constants.turnKv);
+  private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(Constants.driveKs, Constants.driveKv);
   private final SimpleMotorFeedforward m_turnFeedforward = new SimpleMotorFeedforward(Constants.turnKs, Constants.turnKv);
 
   /**

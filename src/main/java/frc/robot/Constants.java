@@ -18,7 +18,8 @@ public final class Constants {
     // todo fill out values correctly, most were taken from the examples
 
     // Drivetrain
-    public static final double maxSpeed = 3.0;  // 3 meters per second
+    public static final double maxWheelSpeed = 10;  // 3 meters per second
+    public static final double maxTranslationalSpeed = 1;
     public static final double maxAngularSpeed = Math.PI;  // 1/2 rotation per second
 
     // SwerveModule
@@ -30,7 +31,7 @@ public final class Constants {
     public static final double driveKs = 0.0888;
     public static final double driveKv = 0.1214 / gearRatio / wheelCircumference;
     public static final double driveKa = 0.00314 / gearRatio / wheelCircumference;
-    public static final double driveKp = 0.066178 / gearRatio / wheelCircumference;
+    public static final double driveKp = 0;
     public static final double driveKd = 0;
     public static final double driveKi = 0;
 
