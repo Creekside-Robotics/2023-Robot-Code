@@ -3,7 +3,7 @@ This repository maintains our robot's 2022 swerve bot which working towards comp
 
 ## Goals for Challange
  - [x] Well characterized swerve drive
- - [ ] Simple easy to use drive controls
+ - [x] Simple easy to use drive controls
  - [ ] Autonomous Tasks
  - [ ] Full Autonomous mode
 
