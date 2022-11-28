@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.ResetGyro;
+import frc.robot.subsystems.Communications;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.SwerveModule;
 
@@ -21,14 +22,15 @@ import frc.robot.subsystems.SwerveModule;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   XboxController xboxController = new XboxController(0);
-  
-  private SwerveModule frontRight = new SwerveModule(1, 2, 1);
-  private SwerveModule frontLeft = new SwerveModule(3, 4, 2);
-  private SwerveModule backRight = new SwerveModule(5, 6, 3);
-  private SwerveModule backLeft = new SwerveModule(7, 8, 4);
 
-  private Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft);
-  private ResetGyro resetCommand = new ResetGyro(drivetrain);
+  private final Communications communications = new Communications();
+  private final SwerveModule frontRight = new SwerveModule(1, 2, 1);
+  private final SwerveModule frontLeft = new SwerveModule(3, 4, 2);
+  private final SwerveModule backRight = new SwerveModule(5, 6, 3);
+  private final SwerveModule backLeft = new SwerveModule(7, 8, 4);
+
+  private final Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, communications);
+  private final ResetGyro resetCommand = new ResetGyro(drivetrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -38,7 +40,7 @@ public class RobotContainer {
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */

@@ -20,7 +20,7 @@ public class ManualDrive extends CommandBase {
    * Creates a new ManualDrive. 
    * 
    * @param drivetrain The drivetrain moving the robot
-   * @param joystick The joystick controlling the movement
+   * @param xboxController The joystick controlling the movement
    */
   public ManualDrive(Drivetrain drivetrain, XboxController xboxController) {
     this.drivetrain = drivetrain;
