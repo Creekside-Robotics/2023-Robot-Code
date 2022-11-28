@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ManualDrive;
-import frc.robot.commands.ResetGyro;
+import frc.robot.commands.ResetPose;
 import frc.robot.subsystems.Communications;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.SwerveModule;
@@ -30,7 +30,7 @@ public class RobotContainer {
   private final SwerveModule backLeft = new SwerveModule(7, 8, 4);
 
   private final Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, communications);
-  private final ResetGyro resetCommand = new ResetGyro(drivetrain);
+  private final ResetPose resetCommand = new ResetPose(drivetrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
