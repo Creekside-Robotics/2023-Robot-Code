@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**
@@ -54,4 +56,11 @@ public final class Constants {
     public static final Translation2d frontRightLocation = new Translation2d(0.3115, -0.3115);
     public static final Translation2d backLeftLocation = new Translation2d(-0.3115, 0.3115);
     public static final Translation2d backRightLocation = new Translation2d(-0.3115, -0.3115);
+
+    // Starting Positions
+    public static final Pose2d startingPose = new Pose2d(
+            1,
+            1,
+            new Rotation2d(0)
+    );
 }
