@@ -72,4 +72,10 @@ public class Communications extends SubsystemBase {
     public void setGameTime(double time){
         this.gameDataTable.getEntry("Game Time").setDouble(time);
     }
+
+    @Override
+    public void periodic() {
+        this.setGameTime(DriverStation.getMatchTime());
+        this.setTeamColor(DriverStation.getAlliance());
+    }
 }

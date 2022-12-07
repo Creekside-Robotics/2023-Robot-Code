@@ -56,7 +56,7 @@ public class Drivetrain extends SubsystemBase{
         SwerveModuleState[] swerveModuleStates =
             kinematics.toSwerveModuleStates(
                 fieldRelative
-                    ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, this.odometry.getPoseMeters().getRotation()) :
+                    ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, this.getPose().getRotation()) :
                         new ChassisSpeeds(xSpeed, ySpeed, rot));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.maxWheelSpeed);
         frontLeft.setDesiredState(swerveModuleStates[0]);
@@ -77,11 +77,17 @@ public class Drivetrain extends SubsystemBase{
 
         Pose2d aprilTagPose = communications.getAprilTagPoseData();
         if (aprilTagPose != null && aprilTagPose.getX() != 0){
-            this.setPose(averagePoses(
-                    new Pose2d[]{aprilTagPose, odometry.getPoseMeters()},
+            var fusedPose = averagePoses(
+                    new Pose2d[]{aprilTagPose, getPose()},
                     new double[]{0.1, 0.9}
-            ));
+            );
+            this.setPose(fusedPose);
+            this.communications.setPose(fusedPose);
         }
+    }
+
+    public void updateKinematics() {
+        this.communications.setKinematics(this.getKinematics());
     }
 
     static Pose2d averagePoses(Pose2d[] poses, double[] weights){
@@ -116,5 +122,6 @@ public class Drivetrain extends SubsystemBase{
     @Override
     public void periodic() {
         this.updateOdometry();
+        this.updateKinematics();
     }
 }
