@@ -1,11 +1,5 @@
-# FRC 8775 Robotics - 2022 Offseason Swerve Drive (Fully Autonomous HyperClock Challange)
-This repository maintains our robot's 2022 swerve bot which working towards completing a mock FRC challange with zero driver intervention.
-
-## Goals for Challange
- - [x] Well characterized swerve drive
- - [x] Simple easy to use drive controls
- - [ ] Autonomous Tasks
- - [ ] Full Autonomous mode
+# FRC 8775 Robotics - 2023 Robot Code
+This repository maintains our robot's 2023 season code, designed to meet the requirements of the '[Charged Up](https://www.youtube.com/watch?v=0zpflsYc4PA)' challange.
 
 ## Necessary Software
 There is some software that you will need to work on the project. It is recommended that you install software as instructed in on WPILIB's [website](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html). This will setup the necessary tools for you to develop in vscode.
