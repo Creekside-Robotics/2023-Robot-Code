@@ -8,14 +8,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Communications;
 import frc.robot.subsystems.Drivetrain;
 
 /** Drive the robot with the joystick. Adapted from the mecanum drive  */
 public class ManualDrive extends CommandBase {
-  private Communications communication;
-  private Drivetrain drivetrain;
-  private XboxController xboxController;
+  private final Drivetrain drivetrain;
+  private final XboxController xboxController;
   private boolean fieldOriented;
 
   /** 
@@ -24,10 +22,9 @@ public class ManualDrive extends CommandBase {
    * @param drivetrain The drivetrain moving the robot
    * @param xboxController The joystick controlling the movement
    */
-  public ManualDrive(Drivetrain drivetrain, Communications communications, XboxController xboxController) {
+  public ManualDrive(Drivetrain drivetrain, XboxController xboxController) {
     this.drivetrain = drivetrain;
     this.xboxController = xboxController;
-    this.communication = communications;
     this.fieldOriented = false;  // start as relative driving
 
     // todo ask if it should start as relative driving or not
@@ -37,15 +34,11 @@ public class ManualDrive extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    this.communication.setRobotMode("Manual");
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Translation2d joystickVector = new Translation2d(-this.joystick.getY(), -this.joystick.getX());
-
     // working under the assumption that the coordinates are still different
     double xSpeed = -this.xboxController.getLeftY() * Constants.maxTranslationalSpeed;
     double ySpeed = -this.xboxController.getLeftX() * Constants.maxTranslationalSpeed;
@@ -62,6 +55,5 @@ public class ManualDrive extends CommandBase {
     }
 
     this.drivetrain.drive(xSpeed, ySpeed, rotSpeed, this.fieldOriented);
-
   }
 }
