@@ -19,6 +19,8 @@ public class VisionObjectAPI extends SubsystemBase {
     public Translation2d getNearestObject(String objectType) {
         // Two other ways to filter objectType:
         // Figure out a way to filter out all but a certain objectType when obtaining data from the NetworkTable
+        // Convert the Arrays to ArrayLists (or just have them start as lists) in order to be able to delete all but a certain
+        // objectType (name, x, and y) after obtaining the data from the NetworkTable
         // Current way just skips those entries in the for loop
 
         var name = this.objectTable.getEntry("Name").getStringArray(null);
