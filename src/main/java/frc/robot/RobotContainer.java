@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ManualDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.SwerveModule;
+import frc.robot.subsystems.VisionPoseAPI;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,7 +27,8 @@ public class RobotContainer {
   private final SwerveModule frontLeft = new SwerveModule(3, 4, 2);
   private final SwerveModule backRight = new SwerveModule(5, 6, 3);
   private final SwerveModule backLeft = new SwerveModule(7, 8, 4);
-  private final Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft);
+  private final VisionPoseAPI poseAPI = new VisionPoseAPI();
+  private final Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI);
   private final ManualDrive manualDrive = new ManualDrive(drivetrain, xboxController);
   private final Command resetPoseCommand = new InstantCommand(
           () -> drivetrain.setPose(Constants.startingPose)
