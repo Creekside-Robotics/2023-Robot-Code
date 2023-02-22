@@ -30,7 +30,7 @@ public class VisionObjectAPI extends SubsystemBase {
         var maxTranslation = new Translation2d();
 
         for (int i = 0; i < name.length; i++) {
-            if (!Objects.equals(objectType, name[i])) {
+            if (!Objects.equals(objectType, name[i]) || objectType == null) {
                 continue;
             }
             var translation = new Translation2d(x[i], y[i]);
@@ -43,5 +43,4 @@ public class VisionObjectAPI extends SubsystemBase {
 
         return maxTranslation;
     }
-
 }

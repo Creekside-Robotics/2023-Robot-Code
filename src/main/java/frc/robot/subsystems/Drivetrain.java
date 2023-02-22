@@ -8,6 +8,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,8 +23,9 @@ public class Drivetrain extends SubsystemBase{
     private final ADXRS450_Gyro gyro;
     private final SwerveDriveKinematics kinematics;
     private final SwerveDriveOdometry odometry;
+    private final VisionPoseAPI poseAPI;
 
-    public Drivetrain(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft) {
+    public Drivetrain(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft, VisionPoseAPI poseAPI) {
         this.frontRight = frontRight;
         this.frontLeft = frontLeft;
         this.backRight = backRight;
@@ -38,6 +41,7 @@ public class Drivetrain extends SubsystemBase{
             Constants.backRightLocation
         );
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
+        this.poseAPI = poseAPI;
     }
 
     /**
@@ -70,6 +74,18 @@ public class Drivetrain extends SubsystemBase{
             backLeft.getState(),
             backRight.getState()
         );
+        this.updateWithMergedPose();
+    }
+
+    public void updateWithMergedPose() {
+        var visionPose = this.poseAPI.getNewPose();
+        var encoderPose = this.odometry.getPoseMeters();
+        if (visionPose != null) {
+            this.setPose(Utils.averagePoses(
+                    new double[]{0.9, 0.1},
+                    new Pose2d[]{encoderPose, visionPose}
+            ));
+        }
     }
 
     public void setPose(Pose2d pose) {

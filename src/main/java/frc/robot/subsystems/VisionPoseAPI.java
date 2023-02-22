@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class VisionPoseAPI extends SubsystemBase {
     NetworkTableInstance networkTableInstance;
     NetworkTable poseTable;
-    int latestPoseId = -1;
+    int latestPoseId = 0;
 
     public VisionPoseAPI(){
         this.networkTableInstance = NetworkTableInstance.getDefault();
@@ -29,14 +29,14 @@ public class VisionPoseAPI extends SubsystemBase {
     }
 
     public int getPoseId(){
-        return (int) this.poseTable.getEntry("Count").getDouble(-1);
+        return (int) this.poseTable.getEntry("Count").getDouble(0);
     }
 
     public Pose2d getNewPose(){
         var pose = this.getPose();
         var id = this.getPoseId();
 
-        if(id != this.latestPoseId){
+        if(id > this.latestPoseId){
             this.latestPoseId = id;
             return pose;
         }
