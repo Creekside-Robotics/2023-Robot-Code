@@ -63,4 +63,8 @@ public final class Constants {
             1,
             new Rotation2d(0)
     );
+
+    // Claw Constants
+    public static final int clawForwardChannel = 0;
+    public static final int clawReverseChannel = 1;
 }
