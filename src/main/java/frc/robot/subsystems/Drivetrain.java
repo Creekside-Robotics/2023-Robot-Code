@@ -25,6 +25,8 @@ public class Drivetrain extends SubsystemBase{
     private final SwerveDriveOdometry odometry;
     private final VisionPoseAPI poseAPI;
 
+    private String onBoardObjectType;
+
     public Drivetrain(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft, VisionPoseAPI poseAPI) {
         this.frontRight = frontRight;
         this.frontLeft = frontLeft;
@@ -42,6 +44,7 @@ public class Drivetrain extends SubsystemBase{
         );
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
         this.poseAPI = poseAPI;
+        this.onBoardObjectType = "Unknown";
     }
 
     /**
@@ -102,8 +105,17 @@ public class Drivetrain extends SubsystemBase{
         return kinematics.toChassisSpeeds(states);
     }
 
+    public void setOnboardObjectType(String onBoardObjectType){
+        this.onBoardObjectType = onBoardObjectType;
+    }
+
+    public String getOnboardObjectType(){
+        return this.onBoardObjectType;
+    }
+
     @Override
     public void periodic() {
         this.updateOdometry();
     }
+
 }

@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils;
 
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class VisionObjectAPI extends SubsystemBase {
         this.objectTable = this.networkTableInstance.getTable("Object");
     }
 
-    public Translation2d getNearestObject(String objectType) {
+    public Utils.DynamicObject getNearestObject(String objectType) {
         // Two other ways to filter objectType:
         // Figure out a way to filter out all but a certain objectType when obtaining data from the NetworkTable
         // Convert the Arrays to ArrayLists (or just have them start as lists) in order to be able to delete all but a certain
@@ -28,6 +29,7 @@ public class VisionObjectAPI extends SubsystemBase {
         var y = this.objectTable.getEntry("yPos").getDoubleArray(new double[]{});
 
         var maxTranslation = new Translation2d();
+        int maxObjectId = -1;
 
         for (int i = 0; i < name.length; i++) {
             if (!Objects.equals(objectType, name[i]) && objectType != null) {
@@ -38,9 +40,14 @@ public class VisionObjectAPI extends SubsystemBase {
 
             if (distance > maxTranslation.getNorm()) {
                 maxTranslation = translation;
+                maxObjectId = i;
             }
         }
 
-        return maxTranslation;
+        if(maxObjectId != -1){
+            return new Utils.DynamicObject(name[maxObjectId], x[maxObjectId], y[maxObjectId]);
+        } else {
+            return null;
+        }
     }
 }
