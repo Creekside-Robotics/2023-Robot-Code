@@ -6,19 +6,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Indexer extends SubsystemBase {
     private final CANSparkMax motor;
-    private double spinSpeed = 0;
+    private Mode mode;
 
     public Indexer(int canId, boolean reverse){
         this.motor = new CANSparkMax(canId, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.motor.setInverted(reverse);
+        this.mode = Mode.Stopped;
     }
 
-    public void setSpeed(double speed){
-        this.spinSpeed = speed;
+    public void setMode(Mode mode){
+        this.mode = mode;
     }
 
     @Override
     public void periodic() {
-        this.motor.set(this.spinSpeed);
+        switch (this.mode){
+            case Stopped:
+                this.motor.set(0);
+                break;
+            case Clockwise:
+                this.motor.set(0.5);
+                break;
+            case CounterClockwise:
+                this.motor.set(-0.5);
+                break;
+        }
+    }
+
+    public enum Mode{
+        Clockwise,
+        CounterClockwise,
+        Stopped
     }
 }
