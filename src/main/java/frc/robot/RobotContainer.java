@@ -4,14 +4,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DriveToPose;
 import frc.robot.commands.ManualDrive;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.SwerveModule;
-import frc.robot.subsystems.VisionPoseAPI;
+import frc.robot.subsystems.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,8 +33,15 @@ public class RobotContainer {
   private final SwerveModule backRight = new SwerveModule(5, 6, 3);
   private final SwerveModule backLeft = new SwerveModule(7, 8, 4);
   private final VisionPoseAPI poseAPI = new VisionPoseAPI();
+  private final VisionObjectAPI objectAPI = new VisionObjectAPI();
   private final Drivetrain drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI);
+  private final Arm lowerArm = new Arm(new int[]{9, 10}, 0, 0, new boolean[]{true, true}, true);
   private final ManualDrive manualDrive = new ManualDrive(drivetrain, xboxController);
+  private final DriveToPose exampleDriveToPose = new DriveToPose(
+          drivetrain,
+          () -> new Pose2d(1, 1, new Rotation2d(Math.PI)),
+          ArrayList::new
+  );
   private final Command resetPoseCommand = new InstantCommand(
           () -> drivetrain.setPose(Constants.startingPose)
   );

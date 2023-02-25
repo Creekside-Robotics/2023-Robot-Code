@@ -22,6 +22,7 @@ public final class Constants {
     // Drivetrain
     public static final double maxWheelSpeed = 10;  // 3 meters per second
     public static final double maxTranslationalSpeed = 1;
+    public static final double maxTranslationalAcceleration = 1;
     public static final double maxAngularSpeed = Math.PI;  // 1/2 rotation per second
 
     // SwerveModule
