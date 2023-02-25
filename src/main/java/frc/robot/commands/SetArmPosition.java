@@ -13,13 +13,14 @@ public class SetArmPosition extends CommandBase {
     private final Arm arm;
     private final boolean hold;
     private final double endPosition;
-    final private double speed = 0.4;
+    final private double speed;
     final private double tolerance = 0.03;
 
-    public SetArmPosition(Arm arm, double position, boolean hold) {
+    public SetArmPosition(Arm arm, double position, double speed, boolean hold) {
         // Use addRequirements() here to declare subsystem dependencies.
         this.arm = arm;
         this.hold = hold;
+        this.speed = speed;
         this.endPosition = position;
         addRequirements(this.arm);
     }
@@ -35,17 +36,14 @@ public class SetArmPosition extends CommandBase {
         double difference = this.endPosition - this.arm.getPosition();
         if (Math.abs(difference) < tolerance) {
             this.arm.setSpeed(0);
-        } else if (difference > 0) {
+        } else {
             this.arm.setSpeed(this.speed);
-        } else if (difference < 0) {
-            this.arm.setSpeed(-this.speed);
         }
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-    }
+    public void end(boolean interrupted) {}
 
     // Returns true when the command should end.
     @Override
