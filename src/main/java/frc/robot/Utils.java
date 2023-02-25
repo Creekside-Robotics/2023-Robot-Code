@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 
 public class Utils {
     public static Pose2d averagePoses(double[] weights, Pose2d[] poses){
@@ -18,5 +19,31 @@ public class Utils {
         }
 
         return new Pose2d(x, y, new Rotation2d(rotX, rotY));
+    }
+
+    public static class DynamicObject{
+        private String type;
+        private Translation2d pose;
+
+        public DynamicObject(String type, double x, double y){
+            this.type = type;
+            this.pose = new Translation2d(x, y);
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public Translation2d getPose() {
+            return pose;
+        }
+
+        public void setPose(Translation2d pose) {
+            this.pose = pose;
+        }
     }
 }
