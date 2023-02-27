@@ -18,15 +18,16 @@ import frc.robot.subsystems.Drivetrain;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class DriveToPose extends CommandBase {
+public class DriveToPoseTrajectory extends CommandBase {
     private final HolonomicDriveController controller;
     private final Drivetrain drivetrain;
     private final Callable<Pose2d> poseCallable;
     private final Callable<List<Translation2d>> keyPointsCallable;
+    private Pose2d finalPose;
     private Trajectory trajectory;
     private final Timer timer;
 
-    public DriveToPose(Drivetrain drivetrain, Callable<Pose2d> poseCallable, Callable<List<Translation2d>> keyPointsCallable){
+    public DriveToPoseTrajectory(Drivetrain drivetrain, Callable<Pose2d> poseCallable, Callable<List<Translation2d>> keyPointsCallable){
         this.drivetrain = drivetrain;
         this.controller = new HolonomicDriveController(
                 new PIDController(1, 0, 0), new PIDController(1, 0, 0),
@@ -53,16 +54,18 @@ public class DriveToPose extends CommandBase {
 
     private Trajectory getTrajectoryToPose() throws Exception {
         var initial = this.drivetrain.getPose();
+        var keyPoints = this.keyPointsCallable.call();
+        this.finalPose = this.poseCallable.call();
         var config = new TrajectoryConfig(Constants.maxTranslationalSpeed, Constants.maxTranslationalAcceleration);
         //more code may be needed later for reversing
-        return TrajectoryGenerator.generateTrajectory(initial, this.keyPointsCallable.call(), this.poseCallable.call(), config).relativeTo(initial); //Converting field relative pose to robot relative pose.
+        return TrajectoryGenerator.generateTrajectory(initial, keyPoints, this.finalPose, config);
     }
 
     @Override
     public void execute() {
         var time = this.timer.get();
         var trajectoryState = this.trajectory.sample(time);
-        var output = this.controller.calculate(this.drivetrain.getPose(), trajectoryState, trajectoryState.poseMeters.getRotation());
+        var output = this.controller.calculate(this.drivetrain.getPose(), trajectoryState, this.finalPose.getRotation());
         this.drivetrain.drive(
                 output.vxMetersPerSecond,
                 output.vyMetersPerSecond,
@@ -73,6 +76,6 @@ public class DriveToPose extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return this.controller.atReference() && this.timer.get() > this.trajectory.getTotalTimeSeconds();
+        return this.timer.get() > this.trajectory.getTotalTimeSeconds();
     }
 }
