@@ -6,8 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -48,6 +50,8 @@ public class RobotContainer {
   private SetArmPosition testSetUpperArm;
   private OpenClaw openClaw;
   private CloseClaw closeClaw;
+  private SetIntake runIntake;
+  private SetIntake stopIntake;
 
   // Buttons
 
@@ -80,8 +84,8 @@ public class RobotContainer {
     this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI);
     this.indexer = new Indexer(12, false);
     this.intake = new Intake(13, 14, false, false, 3, 4, 5, 6);
-    this.lowerArm = new Arm(new int[]{9, 10}, 0, 0, new boolean[]{true, false}, true);
-    this.upperArm = new Arm(new int[]{11}, 1, 0, new boolean[]{false}, true);
+    this.lowerArm = new Arm(new int[]{9, 10}, 0, -0.1, new boolean[]{false, true}, true);
+    this.upperArm = new Arm(new int[]{11}, 1, 0, new boolean[]{true}, true);
     this.claw = new Claw();
   }
 
@@ -94,14 +98,19 @@ public class RobotContainer {
     this.stopIndexer = new SetIndexerMode(this.indexer, Indexer.Mode.Stopped);
     this.stopLowerArm = new SetArmSpeed(this.lowerArm, 0);
     this.stopUpperArm = new SetArmSpeed(this.upperArm, 0);
-    this.testSetLowerArm = new SetArmPosition(this.lowerArm, 0.25, -0.2, false);
-    this.testSetUpperArm = new SetArmPosition(this.upperArm, 0, 0.2, false);
+    this.testSetLowerArm = new SetArmPosition(this.lowerArm, 0.25, 0.1, true);
+    this.testSetUpperArm = new SetArmPosition(this.upperArm, 0, 0.1, false);
     this.openClaw = new OpenClaw(this.claw);
     this.closeClaw = new CloseClaw(this.claw);
+    this.runIntake =  new SetIntake(this.intake, true, 1);
+    this.stopIntake = new SetIntake(this.intake, false, 0);
   }
 
   private void createButtons(){
+    var testButton = new JoystickButton(xboxController, 1);
     this.drivetrain.setDefaultCommand(this.manualDrive);
+    this.lowerArm.setDefaultCommand(this.stopLowerArm);
+    this.upperArm.setDefaultCommand(this.stopUpperArm);
   }
 
   private void configureButtonBindings() {

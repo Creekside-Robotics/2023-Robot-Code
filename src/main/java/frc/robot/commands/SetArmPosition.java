@@ -33,9 +33,11 @@ public class SetArmPosition extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double difference = this.endPosition - this.arm.getPosition();
+        double difference = this.arm.getPosition() - this.endPosition;
         if (Math.abs(difference) < tolerance) {
             this.arm.setSpeed(0);
+        } else if (difference > 0){
+            this.arm.setSpeed(-this.speed);
         } else {
             this.arm.setSpeed(this.speed);
         }
