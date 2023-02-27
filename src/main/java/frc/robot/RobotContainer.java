@@ -73,8 +73,8 @@ public class RobotContainer {
     this.xboxController = new XboxController(0);
     this.frontRight = new SwerveModule(1, 2, 1);
     this.frontLeft = new SwerveModule(3, 4, 2);
-    this.backRight = new SwerveModule(5, 6, 3);
-    this.backLeft = new SwerveModule(7, 8, 4);
+    this.backLeft = new SwerveModule(5, 6, 3);
+    this.backRight = new SwerveModule(7, 8, 4);
     this.poseAPI = new VisionPoseAPI();
     this.objectAPI = new VisionObjectAPI();
     this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI);
@@ -101,7 +101,7 @@ public class RobotContainer {
   }
 
   private void createButtons(){
-
+    this.drivetrain.setDefaultCommand(this.manualDrive);
   }
 
   private void configureButtonBindings() {
