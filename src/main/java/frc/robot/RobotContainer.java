@@ -38,7 +38,7 @@ public class RobotContainer {
   // Commands
   private ManualDrive manualDrive;
   private ResetPose resetPose;
-  private DriveToPose testTrajectory;
+  private DriveToPoseTrajectory testTrajectory;
   private SetIndexerMode runIndexerClockwise;
   private SetIndexerMode runIndexerCounterclockwise;
   private SetIndexerMode stopIndexer;
@@ -88,7 +88,7 @@ public class RobotContainer {
   private void createCommands(){
     this.manualDrive = new ManualDrive(this.drivetrain, this.xboxController);
     this.resetPose = new ResetPose(this.drivetrain, new Pose2d(0, 0, new Rotation2d(0)));
-    this.testTrajectory = new DriveToPose(this.drivetrain, () -> new Pose2d(1, 1, new Rotation2d(Math.PI)), ArrayList::new);
+    this.testTrajectory = new DriveToPoseTrajectory(this.drivetrain, () -> new Pose2d(1, 1, new Rotation2d(Math.PI)), ArrayList::new);
     this.runIndexerClockwise = new SetIndexerMode(this.indexer, Indexer.Mode.Clockwise);
     this.runIndexerCounterclockwise = new SetIndexerMode(this.indexer, Indexer.Mode.CounterClockwise);
     this.stopIndexer = new SetIndexerMode(this.indexer, Indexer.Mode.Stopped);
