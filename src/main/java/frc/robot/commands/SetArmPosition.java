@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
@@ -13,15 +14,18 @@ public class SetArmPosition extends CommandBase {
     private final Arm arm;
     private final boolean hold;
     private final double endPosition;
+    final private PIDController controller;
     final private double speed;
-    final private double tolerance = 0.03;
 
     public SetArmPosition(Arm arm, double position, double speed, boolean hold) {
         // Use addRequirements() here to declare subsystem dependencies.
         this.arm = arm;
         this.hold = hold;
-        this.speed = speed;
+        this.controller = new PIDController(2, 0, 0);
+        this.controller.enableContinuousInput(-0.5, 0.5);
+        this.controller.setTolerance(0.03);
         this.endPosition = position;
+        this.speed = speed;
         addRequirements(this.arm);
     }
 
@@ -34,13 +38,9 @@ public class SetArmPosition extends CommandBase {
     @Override
     public void execute() {
         double difference = this.arm.getPosition() - this.endPosition;
-        if (Math.abs(difference) < tolerance) {
-            this.arm.setSpeed(0);
-        } else if (difference > 0){
-            this.arm.setSpeed(-this.speed);
-        } else {
-            this.arm.setSpeed(this.speed);
-        }
+        double output = this.controller.calculate(difference);
+        double constrainedOutput = Math.min(Math.max(output, -this.speed), this.speed);
+        this.arm.setSpeed(constrainedOutput);
     }
 
     // Called once the command ends or is interrupted.
@@ -50,6 +50,6 @@ public class SetArmPosition extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(this.endPosition - this.arm.getPosition()) < tolerance && !this.hold;
+        return this.controller.atSetpoint() && !this.hold;
     }
 }
