@@ -1,11 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -17,14 +15,14 @@ public class DriveToPosePID extends CommandBase {
     private final Callable<Pose2d> poseCallable;
     private final boolean hold;
     private Pose2d finalPose;
-    private final ProfiledPIDController distanceController;
+    private final PIDController distanceController;
     private final PIDController angleController;
 
     public DriveToPosePID(Drivetrain drivetrain, Callable<Pose2d> poseCallable, boolean hold) {
         this.drivetrain = drivetrain;
         this.poseCallable = poseCallable;
         this.hold = hold;
-        this.distanceController = new ProfiledPIDController(1, 0, 0.2, new TrapezoidProfile.Constraints(1, 1));
+        this.distanceController = new PIDController(1, 0, 0.2);
         this.distanceController.setTolerance(0.05);
         this.angleController = new PIDController(1, 0, 0.5);
         this.angleController.setTolerance(0.05);
@@ -55,12 +53,17 @@ public class DriveToPosePID extends CommandBase {
         );
         Rotation2d rotationalDifference = this.finalPose.getRotation().minus(currentPose.getRotation());
 
-        double driveSpeed = this.distanceController.calculate(translationalDifference.getNorm());
+        double driveSpeed = getConstrainedOutput(1, this.distanceController, translationalDifference.getNorm());
         double xOutput = driveSpeed * translationalDifferenceAngle.getCos();
         double yOutput = driveSpeed * translationalDifferenceAngle.getSin();
         double rotOutput = this.angleController.calculate(rotationalDifference.getRadians());
 
         this.drivetrain.drive(xOutput, yOutput, rotOutput, true);
+    }
+
+    public double getConstrainedOutput(double speed, PIDController controller, double difference){
+        double output = controller.calculate(difference);
+        return Math.min(Math.max(output, -speed), speed);
     }
 
     @Override
