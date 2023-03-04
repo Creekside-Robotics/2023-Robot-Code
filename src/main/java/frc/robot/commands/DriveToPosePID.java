@@ -17,15 +17,31 @@ public class DriveToPosePID extends CommandBase {
     private Pose2d finalPose;
     private final PIDController distanceController;
     private final PIDController angleController;
+    private final double speed;
 
-    public DriveToPosePID(Drivetrain drivetrain, Callable<Pose2d> poseCallable, boolean hold) {
+    public DriveToPosePID(Drivetrain drivetrain, Callable<Pose2d> poseCallable, double speed, double precision, boolean hold) {
         this.drivetrain = drivetrain;
         this.poseCallable = poseCallable;
         this.hold = hold;
-        this.distanceController = new PIDController(1, 0, 0.2);
-        this.distanceController.setTolerance(0.05);
-        this.angleController = new PIDController(1, 0, 0.5);
-        this.angleController.setTolerance(0.05);
+        this.speed = speed;
+        this.distanceController = new PIDController(1, 0, 0.1);
+        this.distanceController.setTolerance(precision);
+        this.angleController = new PIDController(1, 0, 0.1);
+        this.angleController.setTolerance(precision);
+        // each subsystem used by the command must be passed into the
+        // addRequirements() method (which takes a vararg of Subsystem)
+        addRequirements(this.drivetrain);
+    }
+
+    public DriveToPosePID(Drivetrain drivetrain, Pose2d pose, double speed, double precision, boolean hold) {
+        this.drivetrain = drivetrain;
+        this.poseCallable = () -> pose;
+        this.hold = hold;
+        this.speed = speed;
+        this.distanceController = new PIDController(1, 0, 0.1);
+        this.distanceController.setTolerance(precision);
+        this.angleController = new PIDController(1, 0, 0.1);
+        this.angleController.setTolerance(precision);
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.drivetrain);
@@ -53,7 +69,7 @@ public class DriveToPosePID extends CommandBase {
         );
         Rotation2d rotationalDifference = this.finalPose.getRotation().minus(currentPose.getRotation());
 
-        double driveSpeed = getConstrainedOutput(1, this.distanceController, translationalDifference.getNorm());
+        double driveSpeed = getConstrainedOutput(this.speed, this.distanceController, translationalDifference.getNorm());
         double xOutput = driveSpeed * translationalDifferenceAngle.getCos();
         double yOutput = driveSpeed * translationalDifferenceAngle.getSin();
         double rotOutput = this.angleController.calculate(rotationalDifference.getRadians());

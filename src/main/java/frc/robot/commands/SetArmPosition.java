@@ -8,12 +8,15 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
+import java.util.function.Supplier;
+
 // Sets arm to inputted position
 public class SetArmPosition extends CommandBase {
     /** Creates a new SetArmPosition. */
     private final Arm arm;
     private final boolean hold;
-    private final double endPosition;
+    private final Supplier<Double> getEndPosition;
+    private double endPosition;
     final private PIDController controller;
     final private double speed;
 
@@ -24,14 +27,29 @@ public class SetArmPosition extends CommandBase {
         this.controller = new PIDController(2, 0, 0);
         this.controller.enableContinuousInput(-0.5, 0.5);
         this.controller.setTolerance(0.03);
-        this.endPosition = position;
+        this.getEndPosition = () -> position;
         this.speed = speed;
         addRequirements(this.arm);
     }
 
+    public SetArmPosition(Arm arm, Supplier<Double> positionSupplier, double speed, boolean hold) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.arm = arm;
+        this.hold = hold;
+        this.controller = new PIDController(2, 0, 0);
+        this.controller.enableContinuousInput(-0.5, 0.5);
+        this.controller.setTolerance(0.03);
+        this.getEndPosition = positionSupplier;
+        this.speed = speed;
+        addRequirements(this.arm);
+    }
+
+
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        this.endPosition = this.getEndPosition.get();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
