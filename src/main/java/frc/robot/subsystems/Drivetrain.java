@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -24,10 +26,11 @@ public class Drivetrain extends SubsystemBase{
     private final SwerveDriveKinematics kinematics;
     private final SwerveDriveOdometry odometry;
     private final VisionPoseAPI poseAPI;
+    private final VisionObjectAPI objectAPI;
 
     private String onBoardObjectType;
 
-    public Drivetrain(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft, VisionPoseAPI poseAPI) {
+    public Drivetrain(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft, VisionPoseAPI poseAPI, VisionObjectAPI objectAPI) {
         this.frontRight = frontRight;
         this.frontLeft = frontLeft;
         this.backRight = backRight;
@@ -44,6 +47,7 @@ public class Drivetrain extends SubsystemBase{
         );
         odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
         this.poseAPI = poseAPI;
+        this.objectAPI = objectAPI;
         this.onBoardObjectType = "Unknown";
     }
 
@@ -116,6 +120,29 @@ public class Drivetrain extends SubsystemBase{
     @Override
     public void periodic() {
         this.updateOdometry();
+    }
+
+    public Pose2d getClosestScoringPosition(){
+        var currentPose = getPose();
+        var scoringPoses = Constants.AutoScorePositions.getScoringPositions();
+
+        Pose2d closestPose = null;
+        for (Pose2d pose: scoringPoses){
+            if (closestPose == null){
+                closestPose = pose;
+                continue;
+            }
+            if (pose.getTranslation().minus(currentPose.getTranslation()).getNorm() < closestPose.getTranslation().minus(currentPose.getTranslation()).getNorm()){
+                closestPose = pose;
+            }
+        }
+        return closestPose;
+    }
+
+    public Pose2d getClosestPickupPosition(){
+        var closestObject = objectAPI.getNearestObject("");
+        var fieldRelativeTranslation = closestObject.getPose().rotateBy(getPose().getRotation()).plus(getPose().getTranslation());
+        return new Pose2d(fieldRelativeTranslation, new Rotation2d(closestObject.getPose().getX(), closestObject.getPose().getY()).plus(getPose().getRotation()));
     }
 
 }

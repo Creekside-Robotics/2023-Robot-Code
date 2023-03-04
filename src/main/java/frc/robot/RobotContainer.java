@@ -80,7 +80,7 @@ public class RobotContainer {
     this.backRight = new SwerveModule(7, 8, 4);
     this.poseAPI = new VisionPoseAPI();
     this.objectAPI = new VisionObjectAPI();
-    this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI);
+    this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI, objectAPI);
     this.indexer = new Indexer(12, false);
     this.intake = new Intake(13, 14, false, false, 3, 4, 5, 6);
     this.lowerArm = new Arm(new int[]{9, 10}, 0, -0.1, new boolean[]{false, true}, true);

@@ -69,7 +69,7 @@ public class DriveToPosePID extends CommandBase {
         );
         Rotation2d rotationalDifference = this.finalPose.getRotation().minus(currentPose.getRotation());
 
-        double driveSpeed = getConstrainedOutput(this.speed, this.distanceController, translationalDifference.getNorm());
+        double driveSpeed = Math.abs(getConstrainedOutput(this.speed, this.distanceController, translationalDifference.getNorm()));
         double xOutput = driveSpeed * translationalDifferenceAngle.getCos();
         double yOutput = driveSpeed * translationalDifferenceAngle.getSin();
         double rotOutput = this.angleController.calculate(rotationalDifference.getRadians());
