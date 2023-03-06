@@ -38,7 +38,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getPosition(){
-        return (this.encoder.get() * getEncoderMultiplier() + this.encoderOffset) % 1;
+        return (this.encoder.get() + this.encoderOffset) * getEncoderMultiplier() % 1;
     }
 
 }

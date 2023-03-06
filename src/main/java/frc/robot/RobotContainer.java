@@ -9,6 +9,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 public class RobotContainer {
   // Subsystems
   private XboxController xboxController;
+  private XboxController assistantController;
   private SwerveModule frontRight;
   private SwerveModule frontLeft;
   private SwerveModule backRight;
@@ -74,6 +77,7 @@ public class RobotContainer {
 
   private void createSubsystems(){
     this.xboxController = new XboxController(0);
+    this.assistantController = new XboxController(1);
     this.frontRight = new SwerveModule(1, 2, 1);
     this.frontLeft = new SwerveModule(3, 4, 2);
     this.backLeft = new SwerveModule(5, 6, 3);
@@ -84,7 +88,7 @@ public class RobotContainer {
     this.indexer = new Indexer(12, false);
     this.intake = new Intake(13, 14, false, false, 3, 4, 5, 6);
     this.lowerArm = new Arm(new int[]{9, 10}, 0, -0.1, new boolean[]{false, true}, true);
-    this.upperArm = new Arm(new int[]{11}, 1, 0, new boolean[]{true}, true);
+    this.upperArm = new Arm(new int[]{11}, 1, -0.35, new boolean[]{false}, false);
     this.claw = new Claw();
   }
 
@@ -104,9 +108,35 @@ public class RobotContainer {
     this.stopIntake = new SetIntake(this.intake, false, 0);
   }
 
-  private void createButtons(){}
+  private void createButtons(){
+    Button aButton = new JoystickButton(this.xboxController, 1);
+    Button bButton = new JoystickButton(this.xboxController, 2);
+    Button xButton = new JoystickButton(this.xboxController, 3);
+    Button yButton = new JoystickButton(this.xboxController, 4);
+    Button counterClockWiseButton = new JoystickButton(this.assistantController, 5);
+    Button clockWiseButton = new JoystickButton(this.assistantController, 6);
+    Button stopButton = new JoystickButton(this.assistantController, 2);
+    Button goButton = new JoystickButton(this.assistantController, 1);
+    yButton.whenPressed(new InstantCommand(
+      () -> {drivetrain.setPose(new Pose2d());}
+    ));
+    aButton.whenPressed(new FirstLevelScore(lowerArm, upperArm, claw));
+    bButton.whenPressed(new SecondLevelScore(lowerArm, upperArm, claw));
+    xButton.whenPressed(new ThirdLevelScore(lowerArm, upperArm, claw));
 
-  private void configureButtonBindings() {}
+    counterClockWiseButton.whenPressed(runIndexerCounterclockwise);
+    clockWiseButton.whenPressed(runIndexerClockwise);
+    stopButton.whenPressed(stopIndexer);
+    goButton.whenPressed(new GrabAndPrep(lowerArm, upperArm, claw));
+
+    drivetrain.setDefaultCommand(this.manualDrive);
+    lowerArm.setDefaultCommand(new SetArmPosition(lowerArm, lowerArm::getPosition, 0.1, true));
+    upperArm.setDefaultCommand(new SetArmPosition(upperArm, upperArm::getPosition, 0.1, true));
+  }
+
+  private void configureButtonBindings() {
+    
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

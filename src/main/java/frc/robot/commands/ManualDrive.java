@@ -25,7 +25,7 @@ public class ManualDrive extends CommandBase {
   public ManualDrive(Drivetrain drivetrain, XboxController xboxController) {
     this.drivetrain = drivetrain;
     this.xboxController = xboxController;
-    this.fieldOriented = false;  // start as relative driving
+    this.fieldOriented = true;  // start as relative driving
 
     // todo ask if it should start as relative driving or not
 
@@ -43,16 +43,6 @@ public class ManualDrive extends CommandBase {
     double xSpeed = -this.xboxController.getLeftY() * Constants.maxTranslationalSpeed;
     double ySpeed = -this.xboxController.getLeftX() * Constants.maxTranslationalSpeed;
     double rotSpeed = -this.xboxController.getRightX() * Constants.maxAngularSpeed;
-
-    if (this.xboxController.getRawButtonPressed(Constants.fieldOrientedDriveToggle)) {  // only toggle when the button is pressed and not held
-      this.fieldOriented = !this.fieldOriented;  // invert the toggle
-
-      SmartDashboard.putString(  // update the dashboard
-        "Drive Mode",
-        this.fieldOriented ? "Field Oriented" : "Relative"
-      );
-
-    }
 
     this.drivetrain.drive(xSpeed, ySpeed, rotSpeed, this.fieldOriented);
   }

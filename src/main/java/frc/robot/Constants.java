@@ -25,7 +25,7 @@ public final class Constants {
     public static final double maxWheelSpeed = 10;  // 3 meters per second
     public static final double maxTranslationalSpeed = 1;
     public static final double maxTranslationalAcceleration = 1;
-    public static final double maxAngularSpeed = Math.PI;  // 1/2 rotation per second
+    public static final double maxAngularSpeed = 0.5*Math.PI;  // 1/2 rotation per second
 
     // SwerveModule
     public static final double wheelDiameter = 0.098;
@@ -72,29 +72,29 @@ public final class Constants {
     public static final int clawReverseChannel = 1;
 
     public static class ArmPositions{
-        public static double lowerIndexer = (float) -45 / 360;
-        public static double upperIndexer = (float) -30 / 360;
+        public static double lowerIndexer = (float) -43 / 360;
+        public static double upperIndexer = (float) -42 / 360;
 
-        public static double lowerHover = (float) -60 / 360;
-        public static double upperHover = (float) -20 / 360;
+        public static double lowerHover = (float) -50 / 360;
+        public static double upperHover = (float) 0 / 360;
 
-        public static double lowerTranscendentalOne = (float) -50 / 360;
+        public static double lowerTranscendentalOne = (float) -30 / 360;
         public static double upperTranscendentalOne = (float) 60 / 360;
 
-        public static double lowerOne = (float) -30 / 360;
+        public static double lowerOne = (float) -15 / 360;
         public static double upperOne = (float) 0 / 360;
 
-        public static double lowerTranscendentalTwo = (float) 20 / 360;
+        public static double lowerTranscendentalTwo = (float) 10 / 360;
         public static double upperTranscendentalTwo = (float) 60 / 360;
 
-        public static double lowerTwo = (float) 20 / 360;
-        public static double upperTwo = (float) 10 / 360;
+        public static double lowerTwo = (float) 35 / 360;
+        public static double upperTwo = (float) 20 / 360;
 
-        public static double lowerTranscendentalThree = (float) 60 / 360;
-        public static double upperTranscendentalThree = (float) -20 / 360;
+        public static double lowerTranscendentalThree = (float) 70 / 360;
+        public static double upperTranscendentalThree = (float) 45 / 360;
 
-        public static double lowerThree = (float) 80 / 360;
-        public static double upperThree = (float) -80 / 360;
+        public static double lowerThree = (float) 85 / 360;
+        public static double upperThree = (float) -90 / 360;
     }
 
     public static class AutoScorePositions{
