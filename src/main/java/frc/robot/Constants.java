@@ -122,14 +122,14 @@ public final class Constants {
                 new Pose2d(new Translation2d(Units.inchesToMeters(578), Units.inchesToMeters(191.36)), new Rotation2d())
         };
 
-        private static Pose2d[] cycleDownRedPoses = {
+        private static Pose2d[] cycleDownBluePoses = {
                 new Pose2d(new Translation2d(Units.inchesToMeters(224.34), Units.inchesToMeters(35.07)), new Rotation2d(Math.PI)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(87.92), Units.inchesToMeters(33.1)), new Rotation2d(Math.PI)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(87.92), Units.inchesToMeters(185)), new Rotation2d(Math.PI)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(227), Units.inchesToMeters(187)), new Rotation2d(Math.PI))
         };
 
-        private static Pose2d[] cycleDownBluePoses = {
+        private static Pose2d[] cycleDownRedPoses = {
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 224.34), Units.inchesToMeters(35.07)), new Rotation2d()),
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 87.92), Units.inchesToMeters(33.1)), new Rotation2d()),
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 87.92), Units.inchesToMeters(185)), new Rotation2d()),
@@ -164,6 +164,22 @@ public final class Constants {
                 return cycleDownBluePoses;
             }
             return cycleDownRedPoses;
+        }
+
+        public static Pose2d getCycleZero(){
+            return getCycleDownPositions()[0];
+        }
+
+        public static Pose2d getCycleOne(){
+            return getCycleDownPositions()[1];
+        }
+
+        public static Pose2d getCycleTwo(){
+            return getCycleDownPositions()[2];
+        }
+
+        public static Pose2d getCycleThree(){
+            return getCycleDownPositions()[3];
         }
 
         public static Pose2d[] getAutoPositions(){

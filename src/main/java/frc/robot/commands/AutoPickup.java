@@ -11,7 +11,7 @@ public class AutoPickup extends SequentialCommandGroup {
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
                 new SetIntake(intake, true, 0.5),
-                new DriveToPosePID(drive, drive::getClosestPickupPosition, 0.5, 0.01, false),
+                new DriveToPosePID(drive, drive::getClosestPickupPosition, 0.5, 0.01, false, 0),
                 new SetIntake(intake, false, 0)
         );
     }

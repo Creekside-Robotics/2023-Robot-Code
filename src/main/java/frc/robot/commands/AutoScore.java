@@ -27,7 +27,7 @@ public class AutoScore extends SequentialCommandGroup {
         }
 
         addCommands(
-                new DriveToPosePID(drive, drive::getClosestScoringPosition, 0.5, 0.05, false),
+                new DriveToPosePID(drive, drive::getClosestScoringPosition, 0.5, 0.05, false, 0),
                 scoreCommand
         );
 

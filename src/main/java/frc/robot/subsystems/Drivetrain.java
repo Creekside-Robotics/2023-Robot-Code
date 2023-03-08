@@ -145,4 +145,13 @@ public class Drivetrain extends SubsystemBase{
         return new Pose2d(fieldRelativeTranslation, new Rotation2d(closestObject.getPose().getX(), closestObject.getPose().getY()).plus(getPose().getRotation()));
     }
 
+    public Pose2d getBestBalancePosition(){
+        var defaultBalancePose = Constants.AutoScorePositions.getAutoPositions()[4];
+        if(Math.abs(this.getPose().getRotation().minus(defaultBalancePose.getRotation()).getRadians()) < Math.PI/2){
+            return new Pose2d(defaultBalancePose.getX(), this.getPose().getY(), defaultBalancePose.getRotation());
+        } else {
+            return new Pose2d(defaultBalancePose.getX(), this.getPose().getY(), defaultBalancePose.getRotation().plus(new Rotation2d(Math.PI)));
+        }
+    }
+
 }

@@ -18,8 +18,9 @@ public class DriveToPosePID extends CommandBase {
     private final PIDController distanceController;
     private final PIDController angleController;
     private final double speed;
+    private final double minSpeed;
 
-    public DriveToPosePID(Drivetrain drivetrain, Callable<Pose2d> poseCallable, double speed, double precision, boolean hold) {
+    public DriveToPosePID(Drivetrain drivetrain, Callable<Pose2d> poseCallable, double speed, double precision, boolean hold, double minSpeed) {
         this.drivetrain = drivetrain;
         this.poseCallable = poseCallable;
         this.hold = hold;
@@ -28,12 +29,13 @@ public class DriveToPosePID extends CommandBase {
         this.distanceController.setTolerance(precision);
         this.angleController = new PIDController(1, 0, 0.1);
         this.angleController.setTolerance(precision);
+        this.minSpeed = minSpeed;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.drivetrain);
     }
 
-    public DriveToPosePID(Drivetrain drivetrain, Pose2d pose, double speed, double precision, boolean hold) {
+    public DriveToPosePID(Drivetrain drivetrain, Pose2d pose, double speed, double precision, boolean hold, double minSpeed) {
         this.drivetrain = drivetrain;
         this.poseCallable = () -> pose;
         this.hold = hold;
@@ -42,6 +44,7 @@ public class DriveToPosePID extends CommandBase {
         this.distanceController.setTolerance(precision);
         this.angleController = new PIDController(1, 0, 0.1);
         this.angleController.setTolerance(precision);
+        this.minSpeed = minSpeed;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.drivetrain);
@@ -69,7 +72,7 @@ public class DriveToPosePID extends CommandBase {
         );
         Rotation2d rotationalDifference = this.finalPose.getRotation().minus(currentPose.getRotation());
 
-        double driveSpeed = Math.abs(getConstrainedOutput(this.speed, this.distanceController, translationalDifference.getNorm()));
+        double driveSpeed = getConstrainedOutput(this.speed, this.distanceController, translationalDifference.getNorm());
         double xOutput = driveSpeed * translationalDifferenceAngle.getCos();
         double yOutput = driveSpeed * translationalDifferenceAngle.getSin();
         double rotOutput = this.angleController.calculate(rotationalDifference.getRadians());
@@ -78,7 +81,7 @@ public class DriveToPosePID extends CommandBase {
     }
 
     public double getConstrainedOutput(double speed, PIDController controller, double difference){
-        double output = controller.calculate(difference);
+        double output = Math.abs(controller.calculate(difference));
         return Math.min(Math.max(output, -speed), speed);
     }
 
