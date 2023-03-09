@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -43,7 +44,10 @@ public class ManualDrive extends CommandBase {
     double xSpeed = -this.xboxController.getLeftY() * Constants.maxTranslationalSpeed;
     double ySpeed = -this.xboxController.getLeftX() * Constants.maxTranslationalSpeed;
     double rotSpeed = -this.xboxController.getRightX() * Constants.maxAngularSpeed;
-
-    this.drivetrain.drive(xSpeed, ySpeed, rotSpeed, this.fieldOriented);
+    if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
+      this.drivetrain.drive(xSpeed, ySpeed, rotSpeed, this.fieldOriented);
+    } else {
+      this.drivetrain.drive(-xSpeed, -ySpeed, rotSpeed, this.fieldOriented);
+    }
   }
 }

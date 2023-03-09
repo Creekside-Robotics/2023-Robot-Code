@@ -13,9 +13,7 @@ public class FirstLevelScore extends SequentialCommandGroup {
         super(
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalOne, ArmPositions.upperTranscendentalOne, 0.1),
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerOne, ArmPositions.upperOne, 0.1),
-                new OpenClaw(claw),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalOne, ArmPositions.upperTranscendentalOne, 0.3),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerHover, ArmPositions.upperHover, 0.1)
+                new OpenClaw(claw)
         );
     }
 }

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.ArrayList;
@@ -41,4 +42,7 @@ public class Arm extends SubsystemBase {
         return (this.encoder.get() + this.encoderOffset) * getEncoderMultiplier() % 1;
     }
 
+    @Override
+    public void periodic() {
+    }
 }

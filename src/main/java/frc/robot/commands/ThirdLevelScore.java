@@ -15,11 +15,7 @@ public class ThirdLevelScore extends SequentialCommandGroup {
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalTwo, ArmPositions.upperTranscendentalTwo, 0.3),
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalThree, ArmPositions.upperTranscendentalThree, 0.3),
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerThree, ArmPositions.upperThree, 0.1),
-                new OpenClaw(claw),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalThree, ArmPositions.upperTranscendentalThree, 0.3),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalTwo, ArmPositions.upperTranscendentalTwo, 0.3),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalOne, ArmPositions.upperTranscendentalOne, 0.3),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerHover, ArmPositions.upperHover, 0.1)
+                new OpenClaw(claw)
         );
     }
 }

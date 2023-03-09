@@ -140,7 +140,7 @@ public final class Constants {
                 new Pose2d(new Translation2d(Units.inchesToMeters(224.34), Units.inchesToMeters(35.07)), new Rotation2d(Math.PI/4)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(227), Units.inchesToMeters(187)), new Rotation2d(-Math.PI/4)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(227), Units.inchesToMeters(107)), new Rotation2d(Math.PI)),
-                new Pose2d(new Translation2d(Units.inchesToMeters(87.92), Units.inchesToMeters(107)), new Rotation2d(Math.PI)),
+                new Pose2d(new Translation2d(Units.inchesToMeters(87.92), Units.inchesToMeters(107)), new Rotation2d(0)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(153), Units.inchesToMeters(107)), new Rotation2d(Math.PI))
         };
 
@@ -148,7 +148,7 @@ public final class Constants {
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 224.34), Units.inchesToMeters(35.07)), new Rotation2d(3*Math.PI/4)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 227), Units.inchesToMeters(187)), new Rotation2d(-3*Math.PI/4)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 227), Units.inchesToMeters(107)), new Rotation2d(0)),
-                new Pose2d(new Translation2d(Units.inchesToMeters(650 - 87.92), Units.inchesToMeters(107)), new Rotation2d(0)),
+                new Pose2d(new Translation2d(Units.inchesToMeters(650 - 87.92), Units.inchesToMeters(107)), new Rotation2d(Math.PI)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 153), Units.inchesToMeters(107)), new Rotation2d(0))
         };
 
