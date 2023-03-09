@@ -13,8 +13,10 @@ public class Arm extends SubsystemBase {
     private final DutyCycleEncoder encoder;
     private final boolean encoderDirection;
     private final double encoderOffset;
+    private final String encoderPort;
 
     public Arm(int[] canIds, int encoderPort, double encoderOffset, boolean[] motorForwards, boolean encoderForwards){
+        this.encoderPort = Integer.toString(encoderPort);
         this.motors = new ArrayList<>();
         for(int i = 0; i < canIds.length; i++){
             var motor = new CANSparkMax(canIds[i], CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -44,5 +46,6 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Arm " + this.encoderPort, this.getPosition());
     }
 }
