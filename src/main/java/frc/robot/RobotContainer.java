@@ -6,16 +6,19 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,21 +45,21 @@ public class RobotContainer {
 
   // Commands
   private ManualDrive manualDrive;
-  private ResetPose resetPose;
-  private SetIndexerMode runIndexerClockwise;
-  private SetIndexerMode runIndexerCounterclockwise;
-  private SetIndexerMode stopIndexer;
-  private SetArmSpeed stopLowerArm;
-  private SetArmSpeed stopUpperArm;
-  private SetArmPosition testSetLowerArm;
-  private SetArmPosition testSetUpperArm;
-  private OpenClaw openClaw;
-  private CloseClaw closeClaw;
-  private SetIntake runIntake;
-  private SetIntake stopIntake;
-
-  // Buttons
-
+  private SetArmPosition holdLowerArm;
+  private SetArmPosition holdUpperArm;
+  private AutoScore autoScoreOne;
+  private AutoScore autoScoreTwo;
+  private AutoScore autoScoreThree;
+  private RetractArms retractArms;
+  private AutoPickup autoPickup;
+  private IndexObject indexObject;
+  private AwayFromPickupIn driveAwayIn;
+  private AwayFromPickupOut driveAwayOut;
+  private ToPickupIn toPickupIn;
+  private ToPickupOut toPickupOut;
+  private SetPose resetPose;
+  private DriveToPosePID autoBalance;
+  private SendableChooser<Command> autoCommandChooser;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -86,7 +89,7 @@ public class RobotContainer {
     this.objectAPI = new VisionObjectAPI();
     this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI, objectAPI);
     this.indexer = new Indexer(12, false);
-    this.intake = new Intake(13, 14, false, false, 3, 4, 5, 6);
+    this.intake = new Intake(13, 14, false, false, 2, 3);
     this.lowerArm = new Arm(new int[]{9, 10}, 0, -0.1, new boolean[]{false, true}, true);
     this.upperArm = new Arm(new int[]{11}, 1, -0.35, new boolean[]{false}, false);
     this.claw = new Claw();
@@ -94,18 +97,29 @@ public class RobotContainer {
 
   private void createCommands(){
     this.manualDrive = new ManualDrive(this.drivetrain, this.xboxController);
-    this.resetPose = new ResetPose(this.drivetrain, new Pose2d(0, 0, new Rotation2d(0)));
-    this.runIndexerClockwise = new SetIndexerMode(this.indexer, Indexer.Mode.Clockwise);
-    this.runIndexerCounterclockwise = new SetIndexerMode(this.indexer, Indexer.Mode.CounterClockwise);
-    this.stopIndexer = new SetIndexerMode(this.indexer, Indexer.Mode.Stopped);
-    this.stopLowerArm = new SetArmSpeed(this.lowerArm, 0);
-    this.stopUpperArm = new SetArmSpeed(this.upperArm, 0);
-    this.testSetLowerArm = new SetArmPosition(this.lowerArm, 0.25, 0.1, true);
-    this.testSetUpperArm = new SetArmPosition(this.upperArm, 0, 0.1, false);
-    this.openClaw = new OpenClaw(this.claw);
-    this.closeClaw = new CloseClaw(this.claw);
-    this.runIntake =  new SetIntake(this.intake, true, 1);
-    this.stopIntake = new SetIntake(this.intake, false, 0);
+    this.holdLowerArm = new SetArmPosition(this.lowerArm, this.lowerArm::getPosition, 0.1, true);
+    this.holdUpperArm = new SetArmPosition(this.upperArm, this.upperArm::getPosition, 0.1, true);
+
+    this.autoScoreOne = new AutoScore(drivetrain, lowerArm, upperArm, claw, 1);
+    this.autoScoreTwo = new AutoScore(drivetrain, lowerArm, upperArm, claw, 2);
+    this.autoScoreThree = new AutoScore(drivetrain, lowerArm, upperArm, claw, 3);
+    this.retractArms = new RetractArms(lowerArm, upperArm);
+
+    this.autoPickup = new AutoPickup(drivetrain, intake);
+    this.indexObject = new IndexObject(lowerArm, upperArm, claw, intake, indexer);
+
+    this.driveAwayIn = new AwayFromPickupIn(drivetrain);
+    this.driveAwayOut = new AwayFromPickupOut(drivetrain);
+    this.toPickupIn = new ToPickupIn(drivetrain);
+    this.toPickupOut = new ToPickupOut(drivetrain);
+
+    this.resetPose = new SetPose(this.poseAPI, this.drivetrain, null);
+    this.autoBalance = new DriveToPosePID(drivetrain, drivetrain::getBestBalancePosition, 1, 0.02, true, 0.1);
+
+    this.autoCommandChooser = new SendableChooser<Command>();
+    this.autoCommandChooser.setDefaultOption("Long: Single Pickup, Double Score, Tilt", new TripleThreatLong(drivetrain, lowerArm, upperArm, claw, intake, indexer, poseAPI));
+    this.autoCommandChooser.addOption("Long: Double Pickup, Double Score", new TripleTreatObject(drivetrain, lowerArm, upperArm, claw, intake, indexer, poseAPI));
+    SmartDashboard.putData(this.autoCommandChooser);
   }
 
   private void createButtons(){
@@ -113,25 +127,63 @@ public class RobotContainer {
     Button bButton = new JoystickButton(this.xboxController, 2);
     Button xButton = new JoystickButton(this.xboxController, 3);
     Button yButton = new JoystickButton(this.xboxController, 4);
-    Button counterClockWiseButton = new JoystickButton(this.assistantController, 5);
-    Button clockWiseButton = new JoystickButton(this.assistantController, 6);
-    Button stopButton = new JoystickButton(this.assistantController, 2);
-    Button goButton = new JoystickButton(this.assistantController, 1);
-    yButton.whenPressed(new InstantCommand(
-      () -> {drivetrain.setPose(new Pose2d());}
-    ));
-    aButton.whenPressed(new FirstLevelScore(lowerArm, upperArm, claw));
-    bButton.whenPressed(new SecondLevelScore(lowerArm, upperArm, claw));
-    xButton.whenPressed(new ThirdLevelScore(lowerArm, upperArm, claw));
+    Button leftBumper = new JoystickButton(this.xboxController, 5);
+    Button rightBumper = new JoystickButton(this.xboxController, 6);
+    Button resetButton = new JoystickButton(this.xboxController, 7);
+    Button endgameButton = new JoystickButton(this.xboxController, 8);
 
-    counterClockWiseButton.whenPressed(runIndexerCounterclockwise);
-    clockWiseButton.whenPressed(runIndexerClockwise);
-    stopButton.whenPressed(stopIndexer);
-    goButton.whenPressed(new GrabAndPrep(lowerArm, upperArm, claw));
+    Button aButtonAlternate = new JoystickButton(this.assistantController, 1);
+    Button bButtonAlternate = new JoystickButton(this.assistantController, 2);
+    Button xButtonAlternate = new JoystickButton(this.assistantController, 3);
+    Button yButtonAlternate = new JoystickButton(this.assistantController, 4);
+    Button leftBumperAlternate = new JoystickButton(this.assistantController, 5);
+    Button rightBumperAlternate = new JoystickButton(this.assistantController, 6);
+    Button resetButtonAlternate = new JoystickButton(this.assistantController, 7);
+    Button endgameButtonAlternate = new JoystickButton(this.assistantController, 8);
 
-    drivetrain.setDefaultCommand(this.manualDrive);
-    lowerArm.setDefaultCommand(new SetArmPosition(lowerArm, lowerArm::getPosition, 0.1, true));
-    upperArm.setDefaultCommand(new SetArmPosition(upperArm, upperArm::getPosition, 0.1, true));
+    this.drivetrain.setDefaultCommand(this.manualDrive);
+    this.lowerArm.setDefaultCommand(this.holdLowerArm);
+    this.upperArm.setDefaultCommand(this.holdUpperArm);
+
+    aButton.whileHeld(this.autoScoreOne);
+    aButton.whenReleased(this.retractArms);
+    xButton.whileHeld(this.autoScoreTwo);
+    xButton.whenReleased(this.retractArms);
+    yButton.whileHeld(this.autoScoreThree);
+    yButton.whenReleased(this.retractArms);
+
+    bButton.whileHeld(this.autoPickup);
+    bButton.whenReleased(this.indexObject);
+
+    rightBumper.whileHeld(
+            new ConditionalCommand(
+                    this.driveAwayIn,
+                    this.driveAwayOut,
+                    () -> this.claw.getState() == DoubleSolenoid.Value.kForward
+            )
+    );
+    leftBumper.whileHeld(
+            new ConditionalCommand(
+                    this.toPickupIn,
+                    this.toPickupOut,
+                    () -> this.claw.getState() == DoubleSolenoid.Value.kForward
+            )
+    );
+
+    resetButton.whenPressed(this.resetPose);
+    endgameButton.whenPressed(this.autoBalance);
+
+    aButtonAlternate.whileHeld(new FirstLevelScore(lowerArm, upperArm, claw));
+    aButtonAlternate.whenReleased(this.retractArms);
+    xButtonAlternate.whileHeld(new SecondLevelScore(lowerArm, upperArm, claw));
+    xButtonAlternate.whenReleased(this.retractArms);
+    yButtonAlternate.whileHeld(new ThirdLevelScore(lowerArm, upperArm, claw));
+    yButtonAlternate.whenReleased(this.retractArms);
+
+    bButtonAlternate.whenPressed(new SetIntake(intake, true, 0.5));
+    bButtonAlternate.whenReleased(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
+
+    leftBumperAlternate.whenPressed(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
   }
 
   private void configureButtonBindings() {
@@ -145,6 +197,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return this.autoCommandChooser.getSelected();
   }
 }

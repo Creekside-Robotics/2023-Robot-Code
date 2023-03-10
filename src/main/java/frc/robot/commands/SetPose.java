@@ -25,7 +25,7 @@ public class SetPose extends InstantCommand {
         var pose = this.visionPoseAPI.getNewPose();
         if (pose == null){
             this.drivetrain.setPose(this.defaultPose);
-        } else {
+        } else if (this.defaultPose != null) {
             this.drivetrain.setPose(pose);
         }
     }

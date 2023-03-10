@@ -10,7 +10,6 @@ public class Intake extends SubsystemBase {
     private final CANSparkMax motorOne;
     private final CANSparkMax motorTwo;
     private final DoubleSolenoid pistonOne;
-    private final DoubleSolenoid pistonTwo;
     private double spinSpeed = 0;
 
     public Intake(
@@ -19,16 +18,13 @@ public class Intake extends SubsystemBase {
             boolean reverseOne,
             boolean reverseTwo,
             int solenoidIdOne,
-            int solenoidIdTwo,
-            int solenoidIdThree,
-            int solenoidIdFour
+            int solenoidIdTwo
     ){
         this.motorOne = new CANSparkMax(canIdOne, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.motorOne.setInverted(reverseOne);
         this.motorTwo = new CANSparkMax(canIdTwo, CANSparkMaxLowLevel.MotorType.kBrushless);
         this.motorTwo.setInverted(reverseTwo);
         this.pistonOne = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, solenoidIdOne, solenoidIdTwo);
-        this.pistonTwo = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, solenoidIdThree, solenoidIdFour);
     }
 
     public void setSpeed(double speed){
@@ -37,11 +33,9 @@ public class Intake extends SubsystemBase {
 
     public void setExtended(boolean extended){
         if(extended){
-            this.pistonOne.set(DoubleSolenoid.Value.kForward);
-            this.pistonTwo.set(DoubleSolenoid.Value.kForward);
-        } else {
             this.pistonOne.set(DoubleSolenoid.Value.kReverse);
-            this.pistonTwo.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            this.pistonOne.set(DoubleSolenoid.Value.kForward);
         }
     }
 

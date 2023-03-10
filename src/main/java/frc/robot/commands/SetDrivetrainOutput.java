@@ -8,10 +8,12 @@ import frc.robot.subsystems.Drivetrain;
 public class SetDrivetrainOutput extends CommandBase {
     private final Drivetrain drivetrain;
     private final Pose2d movementVector;
+    private final boolean fieldRelative;
 
-    public SetDrivetrainOutput(Drivetrain drivetrain, Pose2d movementVector) {
+    public SetDrivetrainOutput(Drivetrain drivetrain, Pose2d movementVector, boolean fieldRelative) {
         this.drivetrain = drivetrain;
         this.movementVector = movementVector;
+        this.fieldRelative = fieldRelative;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.drivetrain);
@@ -28,7 +30,7 @@ public class SetDrivetrainOutput extends CommandBase {
                 this.movementVector.getX(),
                 this.movementVector.getY(),
                 this.movementVector.getRotation().getRadians(),
-                true
+                this.fieldRelative
         );
     }
 

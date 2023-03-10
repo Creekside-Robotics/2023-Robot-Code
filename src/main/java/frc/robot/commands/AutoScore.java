@@ -1,7 +1,10 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -28,7 +31,11 @@ public class AutoScore extends SequentialCommandGroup {
 
         addCommands(
                 new DriveToPosePID(drive, drive::getClosestScoringPosition, 0.5, 0.05, false, 0),
-                scoreCommand
+                new ParallelDeadlineGroup(
+                        scoreCommand,
+                        new SetDrivetrainOutput(drive, new Pose2d(0.05, 0, new Rotation2d()), false)
+                )
+
         );
 
     }

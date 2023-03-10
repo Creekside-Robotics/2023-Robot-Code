@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class TripleThreatLong extends SequentialCommandGroup {
-    public TripleThreatLong(Drivetrain drivetrain, Arm lower, Arm upper, Claw claw, Intake intake, Indexer indexer, VisionPoseAPI poseAPI) {
+public class TripleTreatObject extends SequentialCommandGroup {
+    public TripleTreatObject(Drivetrain drivetrain, Arm lower, Arm upper, Claw claw, Intake intake, Indexer indexer, VisionPoseAPI poseAPI) {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
@@ -36,10 +36,13 @@ public class TripleThreatLong extends SequentialCommandGroup {
                         new SetDrivetrainOutput(drivetrain, new Pose2d(0.05, 0, new Rotation2d()), false)
                 ),
                 new ParallelDeadlineGroup(
-                        new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getAutoPositions()[3], 2, 0.1, false, 0.5),
+                        new SequentialCommandGroup(
+                                new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getCycleDownPositions()[1], 2, 0.1, false, 0.5),
+                                new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getAutoPositions()[0], 2, 0.1, false, 0.5)
+                        ),
                         new RetractArms(lower, upper)
                 ),
-                new DriveToPosePID(drivetrain, drivetrain.getBestBalancePosition(), 2, 0.1, true, 0)
+                new AutoPickup(drivetrain, intake)
         );
     }
 }
