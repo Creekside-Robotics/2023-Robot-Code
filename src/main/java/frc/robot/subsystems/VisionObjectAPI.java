@@ -50,4 +50,18 @@ public class VisionObjectAPI extends SubsystemBase {
             return null;
         }
     }
+
+    public Utils.DynamicObject[] getAllObjects() {
+        var name = this.objectTable.getEntry("Name").getStringArray(null);
+        var x = this.objectTable.getEntry("xPos").getDoubleArray(new double[]{});
+        var y = this.objectTable.getEntry("yPos").getDoubleArray(new double[]{});
+
+        Utils.DynamicObject[] objects = new Utils.DynamicObject[name.length];
+
+        for (int i = 0; i < name.length; i++) {
+            objects[i] = new Utils.DynamicObject(name[i], x[i], y[i]);
+        }
+
+        return objects;
+    }
 }
