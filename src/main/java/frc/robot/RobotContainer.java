@@ -44,6 +44,7 @@ public class RobotContainer {
   private Claw claw;
   private FieldDisplay fieldDisplay;
 
+
   // Commands
   private ManualDrive manualDrive;
   private SetArmPosition holdLowerArm;
@@ -90,9 +91,9 @@ public class RobotContainer {
     this.objectAPI = new VisionObjectAPI();
     this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI, objectAPI);
     this.indexer = new Indexer(12, false);
-    this.intake = new Intake(13, 14, false, false, 2, 3);
-    this.lowerArm = new Arm(new int[]{9, 10}, 0, -0.1, new boolean[]{false, true}, true);
-    this.upperArm = new Arm(new int[]{11}, 1, -0.35, new boolean[]{false}, false);
+    this.intake = new Intake(13, 14, true, true, 2, 3);
+    this.lowerArm = new Arm(new int[]{9, 10}, 0, -.13, new boolean[]{false, true}, true);
+    this.upperArm = new Arm(new int[]{11}, 1, .36, new boolean[]{false}, false);
     this.claw = new Claw();
     this.fieldDisplay = new FieldDisplay(this.drivetrain);
   }
@@ -182,14 +183,14 @@ public class RobotContainer {
     yButtonAlternate.whileHeld(new ThirdLevelScore(lowerArm, upperArm, claw));
     yButtonAlternate.whenReleased(this.retractArms);
 
-    bButtonAlternate.whenPressed(new SetIntake(intake, true, 0.5));
+    bButtonAlternate.whenPressed(new SetIntake(intake, true, 1));
     bButtonAlternate.whenReleased(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
 
     leftBumperAlternate.whenPressed(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
   }
 
   private void configureButtonBindings() {
-    
+
   }
 
   /**

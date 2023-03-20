@@ -68,33 +68,33 @@ public final class Constants {
     );
 
     // Claw Constants
-    public static final int clawForwardChannel = 0;
-    public static final int clawReverseChannel = 1;
+    public static final int clawForwardChannel = 1;
+    public static final int clawReverseChannel = 0;
 
     public static class ArmPositions{
-        public static double lowerIndexer = (float) -43 / 360;
-        public static double upperIndexer = (float) -42 / 360;
+        public static double lowerIndexer = (float) -0.138;
+        public static double upperIndexer = (float) -0.039;
 
-        public static double lowerHover = (float) -50 / 360;
-        public static double upperHover = (float) 0 / 360;
+        public static double lowerHover = (float) -0.215;
+        public static double upperHover = (float) 0.055;
 
-        public static double lowerTranscendentalOne = (float) -30 / 360;
-        public static double upperTranscendentalOne = (float) 60 / 360;
+        public static double lowerTranscendentalOne = (float) -0.202;
+        public static double upperTranscendentalOne = (float) 0.142;
 
-        public static double lowerOne = (float) -15 / 360;
-        public static double upperOne = (float) 0 / 360;
+        public static double lowerOne = (float) -0.057;
+        public static double upperOne = (float) -0.033;
 
-        public static double lowerTranscendentalTwo = (float) 10 / 360;
-        public static double upperTranscendentalTwo = (float) 60 / 360;
+        public static double lowerTranscendentalTwo = (float) 0.066;
+        public static double upperTranscendentalTwo = (float) 0.061;
 
-        public static double lowerTwo = (float) 35 / 360;
-        public static double upperTwo = (float) 20 / 360;
+        public static double lowerTwo = (float) 0.036;
+        public static double upperTwo = (float) 0.027;
 
-        public static double lowerTranscendentalThree = (float) 70 / 360;
-        public static double upperTranscendentalThree = (float) 45 / 360;
+        public static double lowerTranscendentalThree = (float) 0.247;
+        public static double upperTranscendentalThree = (float) -0.187;
 
-        public static double lowerThree = (float) 85 / 360;
-        public static double upperThree = (float) -90 / 360;
+        public static double lowerThree = (float) 0.216;
+        public static double upperThree = (float) -0.180;
     }
 
     public static class AutoScorePositions{
