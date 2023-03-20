@@ -52,7 +52,7 @@ public class VisionObjectAPI extends SubsystemBase {
     }
 
     public Utils.DynamicObject[] getAllObjects() {
-        var name = this.objectTable.getEntry("Name").getStringArray(null);
+        var name = this.objectTable.getEntry("Name").getStringArray(new String[]{});
         var x = this.objectTable.getEntry("xPos").getDoubleArray(new double[]{});
         var y = this.objectTable.getEntry("yPos").getDoubleArray(new double[]{});
 
