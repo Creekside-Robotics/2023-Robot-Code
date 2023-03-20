@@ -42,6 +42,7 @@ public class RobotContainer {
   private Arm lowerArm;
   private Arm upperArm;
   private Claw claw;
+  private FieldDisplay fieldDisplay;
 
   // Commands
   private ManualDrive manualDrive;
@@ -93,6 +94,7 @@ public class RobotContainer {
     this.lowerArm = new Arm(new int[]{9, 10}, 0, -0.1, new boolean[]{false, true}, true);
     this.upperArm = new Arm(new int[]{11}, 1, -0.35, new boolean[]{false}, false);
     this.claw = new Claw();
+    this.fieldDisplay = new FieldDisplay(this.drivetrain);
   }
 
   private void createCommands(){
