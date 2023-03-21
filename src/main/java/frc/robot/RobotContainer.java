@@ -42,8 +42,6 @@ public class RobotContainer {
   private Arm lowerArm;
   private Arm upperArm;
   private Claw claw;
-  private FieldDisplay fieldDisplay;
-
 
   // Commands
   private ManualDrive manualDrive;
@@ -95,7 +93,6 @@ public class RobotContainer {
     this.lowerArm = new Arm(new int[]{9, 10}, 0, -.13, new boolean[]{false, true}, true);
     this.upperArm = new Arm(new int[]{11}, 1, .36, new boolean[]{false}, false);
     this.claw = new Claw();
-    this.fieldDisplay = new FieldDisplay(this.drivetrain);
   }
 
   private void createCommands(){
@@ -116,7 +113,7 @@ public class RobotContainer {
     this.toPickupIn = new ToPickupIn(drivetrain);
     this.toPickupOut = new ToPickupOut(drivetrain);
 
-    this.resetPose = new SetPose(this.poseAPI, this.drivetrain, null);
+    this.resetPose = new SetPose(this.poseAPI, this.drivetrain, new Pose2d());
     this.autoBalance = new DriveToPosePID(drivetrain, drivetrain::getBestBalancePosition, 1, 0.02, true, 0.1);
 
     this.autoCommandChooser = new SendableChooser<Command>();
@@ -183,14 +180,14 @@ public class RobotContainer {
     yButtonAlternate.whileHeld(new ThirdLevelScore(lowerArm, upperArm, claw));
     yButtonAlternate.whenReleased(this.retractArms);
 
-    bButtonAlternate.whenPressed(new SetIntake(intake, true, 1));
+    bButtonAlternate.whenPressed(new ExtendIntake(this.intake));
     bButtonAlternate.whenReleased(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
-
+   
     leftBumperAlternate.whenPressed(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
   }
 
   private void configureButtonBindings() {
-
+    
   }
 
   /**

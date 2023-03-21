@@ -12,7 +12,7 @@ public class IndexObject extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
-                new SetIntake(intake, false, 0),
+                new RetractIntake(intake),
                 new HoverClaw(upper, lower, claw),
                 new SetIndexerMode(indexer, Indexer.Mode.Clockwise),
                 new WaitCommand(1),

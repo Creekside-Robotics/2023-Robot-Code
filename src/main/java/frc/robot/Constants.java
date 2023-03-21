@@ -48,8 +48,8 @@ public final class Constants {
     public static final double turnKd = 0;
     public static final double turnKi = 0;
 
-    public static final double moduleMaxAngularVelocity = 2 * Math.PI;
-    public static final double moduleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
+    public static final double moduleMaxAngularVelocity = 8 * Math.PI;
+    public static final double moduleMaxAngularAcceleration = 8 * Math.PI; // radians per second squared
 
     // Joystick layout
     public static final int fieldOrientedDriveToggle = 3;

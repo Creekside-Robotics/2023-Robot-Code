@@ -10,9 +10,9 @@ public class AutoPickup extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
-                new SetIntake(intake, true, 0.5),
+                new ExtendIntake(intake),
                 new DriveToPosePID(drive, drive::getClosestPickupPosition, 0.5, 0.01, false, 0),
-                new SetIntake(intake, false, 0)
+                new RetractIntake(intake)
         );
     }
 }

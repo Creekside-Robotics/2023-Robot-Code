@@ -6,6 +6,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,7 +23,7 @@ public class Drivetrain extends SubsystemBase{
     private final SwerveModule frontRight;
     private final SwerveModule backLeft;
     private final SwerveModule backRight;
-    private final ADXRS450_Gyro gyro;
+    private final ADIS16448_IMU gyro;
     private final SwerveDriveKinematics kinematics;
     private final SwerveDriveOdometry odometry;
     private final VisionPoseAPI poseAPI;
@@ -36,7 +37,7 @@ public class Drivetrain extends SubsystemBase{
         this.backRight = backRight;
         this.backLeft = backLeft;
         
-        gyro = new ADXRS450_Gyro();
+        gyro = new ADIS16448_IMU();
         gyro.reset();
 
         kinematics = new SwerveDriveKinematics(
@@ -45,7 +46,7 @@ public class Drivetrain extends SubsystemBase{
             Constants.backLeftLocation,
             Constants.backRightLocation
         );
-        odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d());
+        odometry = new SwerveDriveOdometry(kinematics, getGyroRotation());
         this.poseAPI = poseAPI;
         this.objectAPI = objectAPI;
         this.onBoardObjectType = "Unknown";
@@ -72,10 +73,14 @@ public class Drivetrain extends SubsystemBase{
         backRight.setDesiredState(swerveModuleStates[3]);
     }
 
+    public Rotation2d getGyroRotation(){
+        return Rotation2d.fromDegrees(this.gyro.getGyroAngleX());
+    }
+
     /** Updates the field relative position of the robot. */
     public void updateOdometry() {
         odometry.update(
-            gyro.getRotation2d(),
+            getGyroRotation(),
             frontLeft.getState(),
             frontRight.getState(),
             backLeft.getState(),
@@ -96,7 +101,7 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public void setPose(Pose2d pose) {
-        this.odometry.resetPosition(pose, this.gyro.getRotation2d());
+        this.odometry.resetPosition(pose, this.getGyroRotation());
     }
 
     public Pose2d getPose() {
