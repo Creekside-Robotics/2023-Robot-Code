@@ -25,10 +25,10 @@ public class Indexer extends SubsystemBase {
                 this.motor.set(0);
                 break;
             case Clockwise:
-                this.motor.set(0.1);
+                this.motor.set(0.25);
                 break;
             case CounterClockwise:
-                this.motor.set(-0.1);
+                this.motor.set(-0.25);
                 break;
         }
     }

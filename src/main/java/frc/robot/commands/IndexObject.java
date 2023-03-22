@@ -15,9 +15,9 @@ public class IndexObject extends SequentialCommandGroup {
                 new RetractIntake(intake),
                 new HoverClaw(upper, lower, claw),
                 new SetIndexerMode(indexer, Indexer.Mode.Clockwise),
-                new WaitCommand(1),
+                new WaitCommand(2),
                 new SetIndexerMode(indexer, Indexer.Mode.CounterClockwise),
-                new WaitCommand(1.5),
+                new WaitCommand(3),
                 new SetIndexerMode(indexer, Indexer.Mode.Stopped),
                 new GrabAndPrep(lower, upper, claw)
         );
