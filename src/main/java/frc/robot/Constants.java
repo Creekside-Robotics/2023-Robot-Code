@@ -75,8 +75,8 @@ public final class Constants {
         public static double lowerIndexer = (float) -0.138;
         public static double upperIndexer = (float) -0.039;
 
-        public static double lowerHover = (float) -0.215;
-        public static double upperHover = (float) 0.055;
+        public static double lowerHover = (float) -0.18;
+        public static double upperHover = (float) 0.065;
 
         public static double lowerTranscendentalOne = (float) -0.202;
         public static double upperTranscendentalOne = (float) 0.142;

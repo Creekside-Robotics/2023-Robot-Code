@@ -41,7 +41,14 @@ public class Arm extends SubsystemBase {
     }
 
     public double getPosition(){
-        return (this.encoder.get() * getEncoderMultiplier() + this.encoderOffset) % 1;
+        var value = (this.encoder.get() * getEncoderMultiplier() + this.encoderOffset)%1;
+        if (value < -0.5){
+            value += 1;
+        } 
+        if (value > 0.5){
+            value -= 1;
+        }
+        return value;
     }
 
     @Override
