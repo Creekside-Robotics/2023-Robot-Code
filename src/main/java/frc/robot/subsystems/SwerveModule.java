@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -51,10 +52,8 @@ public class SwerveModule {
       int turningEncoderChannel) {
 
     this.m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
-    this.m_driveMotor.restoreFactoryDefaults();
     this.m_driveMotor.setInverted(false);
     this.m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
-    this.m_turningMotor.restoreFactoryDefaults();
     this.m_turningMotor.setInverted(true);
 
     this.m_driveEncoder = this.m_driveMotor.getEncoder();
@@ -76,7 +75,7 @@ public class SwerveModule {
   }
 
   public double getVelocity(){
-    return this.m_driveEncoder.getVelocity() * (6/39) * (14/50);
+    return this.m_driveEncoder.getVelocity() * (6.0/39) * (14.0/50);
   }
 
   /**
@@ -86,7 +85,6 @@ public class SwerveModule {
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(getVelocity(), Rotation2d.fromDegrees(m_turningEncoder.getAbsolutePosition()));
-    
   }
 
   /**

@@ -10,7 +10,8 @@ public class RetractArms extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
-                new MoveArmsToPosition(lower, upper, Constants.ArmPositions.lowerTranscendentalOne, Constants.ArmPositions.upperTranscendentalOne, 0.3),
+                new SetArmPosition(upper, Constants.ArmPositions.upperTranscendentalOne, 0.1, false),
+                new SetArmPosition(lower, Constants.ArmPositions.lowerTranscendentalOne, 0.1, false),
                 new MoveArmsToPosition(lower, upper, Constants.ArmPositions.lowerHover, Constants.ArmPositions.upperHover, 0.1)
         );
     }

@@ -85,15 +85,15 @@ public final class Constants {
         public static double upperOne = (float) -0.033;
 
         public static double lowerTranscendentalTwo = (float) 0.014;
-        public static double upperTranscendentalTwo = (float) 0.103;
+        public static double upperTranscendentalTwo = (float) 0.163;
 
         public static double lowerTwo = (float) 0.036;
         public static double upperTwo = (float) 0.027;
 
         public static double lowerTranscendentalThree = (float) 0.234;
-        public static double upperTranscendentalThree = (float) -0.120;
+        public static double upperTranscendentalThree = (float) -0.100;
 
-        public static double lowerThree = (float) 0.216;
+        public static double lowerThree = (float) 0.236;
         public static double upperThree = (float) -0.180;
     }
 
