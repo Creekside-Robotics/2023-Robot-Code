@@ -86,7 +86,7 @@ public class Drivetrain extends SubsystemBase{
             backLeft.getState(),
             backRight.getState()
         );
-        //this.updateWithMergedPose();
+        this.updateWithMergedPose();
     }
 
     public void updateWithMergedPose() {

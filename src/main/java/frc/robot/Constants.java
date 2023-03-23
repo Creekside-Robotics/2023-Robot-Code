@@ -91,10 +91,10 @@ public final class Constants {
         public static double upperTwo = (float) 0.027;
 
         public static double lowerTranscendentalThree = (float) 0.234;
-        public static double upperTranscendentalThree = (float) -0.100;
+        public static double upperTranscendentalThree = (float) 0.0;
 
-        public static double lowerThree = (float) 0.236;
-        public static double upperThree = (float) -0.180;
+        public static double lowerThree = (float) 0.30;
+        public static double upperThree = (float) -0.05;
     }
 
     public static class AutoScorePositions{

@@ -12,11 +12,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import frc.robot.Constants;
 
 public class SwerveModule {
@@ -62,8 +60,7 @@ public class SwerveModule {
     // Set the distance per pulse for the drive encoder. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
     // resolution.
-    m_driveEncoder.setPositionConversionFactor(1);
-    m_driveEncoder.setVelocityConversionFactor(1);
+
 
     // Set the distance (in this case, angle) per pulse for the turning encoder.
     // This is the the angle through an entire rotation (2 * pi) divided by the
@@ -75,7 +72,7 @@ public class SwerveModule {
   }
 
   public double getVelocity(){
-    return this.m_driveEncoder.getVelocity() * (6.0/39) * (14.0/50);
+    return this.m_driveEncoder.getVelocity() * (6.0/39) * (14.0/50) * (1/60);
   }
 
   /**
