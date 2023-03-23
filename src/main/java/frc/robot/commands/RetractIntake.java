@@ -11,7 +11,7 @@ public class RetractIntake extends SequentialCommandGroup {
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
                 new SetIntake(intake, false, 1),
-                new WaitCommand(1),
+                new WaitCommand(0.5),
                 new SetIntake(intake, false, 0)
         );
     }

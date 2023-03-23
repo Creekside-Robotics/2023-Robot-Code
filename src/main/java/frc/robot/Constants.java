@@ -75,30 +75,30 @@ public final class Constants {
         public static double lowerIndexer = (float) -0.138;
         public static double upperIndexer = (float) -0.039;
 
-        public static double lowerHover = (float) -0.19;
-        public static double upperHover = (float) 0.065;
+        public static double lowerHover = (float) -0.23;
+        public static double upperHover = (float) 0.09;
 
-        public static double lowerTranscendentalOne = (float) -0.202;
-        public static double upperTranscendentalOne = (float) 0.142;
+        public static double lowerTranscendentalOne = (float) -0.198;
+        public static double upperTranscendentalOne = (float) 0.149;
 
         public static double lowerOne = (float) -0.057;
         public static double upperOne = (float) -0.033;
 
-        public static double lowerTranscendentalTwo = (float) 0.066;
-        public static double upperTranscendentalTwo = (float) 0.061;
+        public static double lowerTranscendentalTwo = (float) 0.014;
+        public static double upperTranscendentalTwo = (float) 0.103;
 
         public static double lowerTwo = (float) 0.036;
         public static double upperTwo = (float) 0.027;
 
-        public static double lowerTranscendentalThree = (float) 0.247;
-        public static double upperTranscendentalThree = (float) -0.187;
+        public static double lowerTranscendentalThree = (float) 0.234;
+        public static double upperTranscendentalThree = (float) -0.120;
 
         public static double lowerThree = (float) 0.216;
         public static double upperThree = (float) -0.180;
     }
 
     public static class AutoScorePositions{
-        private static Pose2d[] blueScorePositions = {
+        private static Pose2d[] redScorePositions = {
                 new Pose2d(new Translation2d(Units.inchesToMeters(71.6), Units.inchesToMeters(22.29)), new Rotation2d(Math.PI)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(71.6), Units.inchesToMeters(43.8)), new Rotation2d(Math.PI)),
                 new Pose2d(new Translation2d(Units.inchesToMeters(71.6), Units.inchesToMeters(65.76)), new Rotation2d(Math.PI)),
@@ -110,7 +110,7 @@ public final class Constants {
                 new Pose2d(new Translation2d(Units.inchesToMeters(71.6), Units.inchesToMeters(191.36)), new Rotation2d(Math.PI))
         };
 
-        private static Pose2d[] redScorePositions = {
+        private static Pose2d[] blueScorePositions = {
                 new Pose2d(new Translation2d(Units.inchesToMeters(578), Units.inchesToMeters(22.29)), new Rotation2d()),
                 new Pose2d(new Translation2d(Units.inchesToMeters(578), Units.inchesToMeters(43.8)), new Rotation2d()),
                 new Pose2d(new Translation2d(Units.inchesToMeters(578), Units.inchesToMeters(65.76)), new Rotation2d()),

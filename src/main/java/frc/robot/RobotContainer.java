@@ -60,6 +60,7 @@ public class RobotContainer {
   private SetPose resetPose;
   private DriveToPosePID autoBalance;
   private SendableChooser<Command> autoCommandChooser;
+  private FieldDisplay fieldDisplay;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -88,6 +89,7 @@ public class RobotContainer {
     this.poseAPI = new VisionPoseAPI();
     this.objectAPI = new VisionObjectAPI();
     this.drivetrain = new Drivetrain(frontRight, frontLeft, backRight, backLeft, poseAPI, objectAPI);
+    this.fieldDisplay = new FieldDisplay(drivetrain);
     this.indexer = new Indexer(12, false);
     this.intake = new Intake(13, 14, true, true, 2, 3);
     this.lowerArm = new Arm(new int[]{9, 10}, 0, -.13, new boolean[]{false, true}, true);

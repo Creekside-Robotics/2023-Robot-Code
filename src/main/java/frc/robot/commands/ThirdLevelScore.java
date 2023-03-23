@@ -12,8 +12,8 @@ public class ThirdLevelScore extends SequentialCommandGroup {
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalOne, ArmPositions.upperTranscendentalOne, 0.1),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalTwo, ArmPositions.upperTranscendentalTwo, 0.3),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalThree, ArmPositions.upperTranscendentalThree, 0.3),
+                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalTwo, ArmPositions.upperTranscendentalTwo, 0.1),
+                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalThree, ArmPositions.upperTranscendentalThree, 0.1),
                 new MoveArmsToPosition(lower, upper, ArmPositions.lowerThree, ArmPositions.upperThree, 0.1),
                 new OpenClaw(claw)
         );

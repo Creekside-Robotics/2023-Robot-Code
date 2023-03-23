@@ -16,11 +16,11 @@ public class Claw extends SubsystemBase {
     }
 
     public void closeClaw(){
-        clawCylinder.set(DoubleSolenoid.Value.kForward);
+        clawCylinder.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void openClaw(){
-        clawCylinder.set(DoubleSolenoid.Value.kReverse);
+        clawCylinder.set(DoubleSolenoid.Value.kForward);
     }
 
     public DoubleSolenoid.Value getState(){

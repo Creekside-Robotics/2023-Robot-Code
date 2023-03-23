@@ -24,7 +24,7 @@ public class SetArmPosition extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         this.arm = arm;
         this.hold = hold;
-        this.controller = new PIDController(4, 0, 0);
+        this.controller = new PIDController(4, 0, 0.05);
         this.controller.setTolerance(0.01);
         this.getEndPosition = () -> position;
         this.speed = speed;
@@ -35,7 +35,7 @@ public class SetArmPosition extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         this.arm = arm;
         this.hold = hold;
-        this.controller = new PIDController(4, 0, 0);
+        this.controller = new PIDController(2, 0, 0);
         this.controller.setTolerance(0.01);
         this.getEndPosition = positionSupplier;
         this.speed = speed;
