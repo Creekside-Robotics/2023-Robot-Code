@@ -55,6 +55,7 @@ public class SwerveModule {
     this.m_turningMotor.setInverted(true);
 
     this.m_driveEncoder = this.m_driveMotor.getEncoder();
+    this.m_driveEncoder.setPosition(0);
     this.m_turningEncoder = new CANCoder(turningEncoderChannel);
 
     // Set the distance per pulse for the drive encoder. We can simply use the
@@ -72,7 +73,11 @@ public class SwerveModule {
   }
 
   public double getVelocity(){
-    return this.m_driveEncoder.getVelocity() * (6.0/39) * (14.0/50) * (1/60);
+    double data = this.m_driveEncoder.getVelocity();
+    data = data * (6.0/39.0) * (14.0/50.0) * (1.0/60.0);
+    
+    return data;
+    
   }
 
   /**
