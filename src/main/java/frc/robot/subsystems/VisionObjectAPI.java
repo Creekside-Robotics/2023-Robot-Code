@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Utils;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class VisionObjectAPI extends SubsystemBase {
@@ -49,5 +50,19 @@ public class VisionObjectAPI extends SubsystemBase {
         } else {
             return null;
         }
+    }
+
+    public ArrayList<Utils.DynamicObject> getAllObjects() {
+        var name = this.objectTable.getEntry("Name").getStringArray(new String[]{});
+        var x = this.objectTable.getEntry("xPos").getDoubleArray(new double[]{});
+        var y = this.objectTable.getEntry("yPos").getDoubleArray(new double[]{});
+        
+        var list = new ArrayList<Utils.DynamicObject>();
+
+        for (int i = 0; i < name.length; i++) {
+            list.add(new Utils.DynamicObject(name[i], x[i], y[i]));
+        }
+        
+        return list;
     }
 }
