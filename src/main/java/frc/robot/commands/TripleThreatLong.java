@@ -13,33 +13,12 @@ public class TripleThreatLong extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
-                new SetPose(poseAPI, drivetrain, Constants.AutoScorePositions.getScoringPositions()[0]),
+                new SetPose(poseAPI, drivetrain, Constants.AutoScorePositions.getScoringPositions()[1]),
                 new ParallelDeadlineGroup(
-                        new ThirdLevelScore(lower, upper, claw),
+                        new SecondLevelScore(lower, upper, claw),
                         new SetDrivetrainOutput(drivetrain, new Pose2d(0.05, 0, new Rotation2d()), false)
                 ),
-                new ParallelDeadlineGroup(
-                        new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getAutoPositions()[0], 2, 0.1, false, 0.5),
-                        new RetractArms(lower, upper)
-                ),
-                new AutoPickup(drivetrain, intake),
-                new ParallelDeadlineGroup(
-                        new SequentialCommandGroup(
-                                new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getCycleDownPositions()[0], 2, 0.1, false, 0.5),
-                                new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getCycleDownPositions()[1], 2, 0.1, false, 0.5),
-                                new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getScoringPositions()[1], 2, 0.1, false, 0.5)
-                        ),
-                        new IndexObject(lower, upper, claw, intake, indexer)
-                ),
-                new ParallelDeadlineGroup(
-                        new ThirdLevelScore(lower, upper, claw),
-                        new SetDrivetrainOutput(drivetrain, new Pose2d(0.05, 0, new Rotation2d()), false)
-                ),
-                new ParallelDeadlineGroup(
-                        new DriveToPosePID(drivetrain, Constants.AutoScorePositions.getAutoPositions()[3], 2, 0.1, false, 0.5),
-                        new RetractArms(lower, upper)
-                ),
-                new DriveToPosePID(drivetrain, drivetrain.getBestBalancePosition(), 2, 0.1, true, 0)
+                new RetractArms(lower, upper)
         );
     }
 }

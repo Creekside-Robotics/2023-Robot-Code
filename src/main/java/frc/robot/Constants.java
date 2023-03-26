@@ -23,9 +23,9 @@ public final class Constants {
 
     // Drivetrain
     public static final double maxWheelSpeed = 10;  // 3 meters per second
-    public static final double maxTranslationalSpeed = 1;
-    public static final double maxTranslationalAcceleration = 1;
-    public static final double maxAngularSpeed = 0.5*Math.PI;  // 1/2 rotation per second
+    public static final double maxTranslationalSpeed = 3;
+    public static final double maxTranslationalAcceleration = 3;
+    public static final double maxAngularSpeed = Math.PI;  // 1/2 rotation per second
 
     // SwerveModule
     public static final double wheelDiameter = 0.098;
@@ -42,10 +42,10 @@ public final class Constants {
 
     //Turn motor Constants
     public static final double turnKs = 0.0807;
-    public static final double turnKv = 2.5952 / (2*Math.PI);
+    public static final double turnKv = 2.852 / (2*Math.PI);
     public static final double turnKa = 0.0849 / (2*Math.PI);
-    public static final double turnKp = 1.7544 / (2*Math.PI);
-    public static final double turnKd = 0;
+    public static final double turnKp = 5 / (2*Math.PI);
+    public static final double turnKd = 0.2;
     public static final double turnKi = 0;
 
     public static final double moduleMaxAngularVelocity = 8 * Math.PI;
@@ -75,14 +75,14 @@ public final class Constants {
         public static double lowerIndexer = (float) -0.138;
         public static double upperIndexer = (float) -0.039;
 
-        public static double lowerHover = (float) -0.23;
+        public static double lowerHover = (float) -0.24;
         public static double upperHover = (float) 0.09;
 
         public static double lowerTranscendentalOne = (float) -0.198;
         public static double upperTranscendentalOne = (float) 0.149;
 
         public static double lowerOne = (float) -0.057;
-        public static double upperOne = (float) -0.033;
+        public static double upperOne = (float) -0;
 
         public static double lowerTranscendentalTwo = (float) 0.014;
         public static double upperTranscendentalTwo = (float) 0.163;
@@ -91,10 +91,10 @@ public final class Constants {
         public static double upperTwo = (float) 0.027;
 
         public static double lowerTranscendentalThree = (float) 0.234;
-        public static double upperTranscendentalThree = (float) 0.0;
+        public static double upperTranscendentalThree = (float) 0;
 
         public static double lowerThree = (float) 0.30;
-        public static double upperThree = (float) -0.05;
+        public static double upperThree = (float) -0.20;
     }
 
     public static class AutoScorePositions{
@@ -152,6 +152,16 @@ public final class Constants {
                 new Pose2d(new Translation2d(Units.inchesToMeters(650 - 153), Units.inchesToMeters(107)), new Rotation2d(0))
         };
 
+        private static Pose2d dockingBluePose = new Pose2d(13.45, 7.17, new Rotation2d(Math.PI/2));
+        private static Pose2d dockingRedPose = new Pose2d(Units.inchesToMeters(650) - 13.45, 7.17, new Rotation2d(Math.PI/2));
+
+        public static Pose2d getDockingPosition(){
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Blue){
+                return dockingBluePose;
+            }
+            return dockingRedPose;
+        }
+        
         public static Pose2d[] getScoringPositions(){
             if (DriverStation.getAlliance() == DriverStation.Alliance.Blue){
                 return blueScorePositions;

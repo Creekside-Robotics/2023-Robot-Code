@@ -11,9 +11,9 @@ public class SecondLevelScore extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalOne, ArmPositions.upperTranscendentalOne, 0.1),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalTwo, ArmPositions.upperTranscendentalTwo, 0.1),
-                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTwo, ArmPositions.upperTwo, 0.1),
+                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalOne, ArmPositions.upperTranscendentalOne, 0.15),
+                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTranscendentalTwo, ArmPositions.upperTranscendentalTwo, 0.15),
+                new MoveArmsToPosition(lower, upper, ArmPositions.lowerTwo, ArmPositions.upperTwo, 0.15),
                 new OpenClaw(claw)
         );
     }

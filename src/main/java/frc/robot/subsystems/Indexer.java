@@ -28,7 +28,13 @@ public class Indexer extends SubsystemBase {
                 this.motor.set(0.25);
                 break;
             case CounterClockwise:
-                this.motor.set(-0.25);
+                this.motor.set(-0.15);
+                break;
+            case PanicClockwise:
+                this.motor.set(1);
+                break;
+            case PanicCounterClockwise:
+                this.motor.set(-1);
                 break;
         }
     }
@@ -36,6 +42,8 @@ public class Indexer extends SubsystemBase {
     public enum Mode{
         Clockwise,
         CounterClockwise,
-        Stopped
+        Stopped,
+        PanicClockwise,
+        PanicCounterClockwise
     }
 }

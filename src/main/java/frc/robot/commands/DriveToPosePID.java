@@ -25,9 +25,9 @@ public class DriveToPosePID extends CommandBase {
         this.poseCallable = poseCallable;
         this.hold = hold;
         this.speed = speed;
-        this.distanceController = new PIDController(1, 0, 0);
+        this.distanceController = new PIDController(5, 0, 0);
         this.distanceController.setTolerance(precision);
-        this.angleController = new PIDController(0.2, 0, 0.05);
+        this.angleController = new PIDController(-2, 0, 0.01);
         this.angleController.setTolerance(precision);
         this.minSpeed = minSpeed;
         // each subsystem used by the command must be passed into the
@@ -40,9 +40,9 @@ public class DriveToPosePID extends CommandBase {
         this.poseCallable = () -> pose;
         this.hold = hold;
         this.speed = speed;
-        this.distanceController = new PIDController(1, 0, 0);
+        this.distanceController = new PIDController(3, 0, 0);
         this.distanceController.setTolerance(precision);
-        this.angleController = new PIDController(0.2, 0, 0.05);
+        this.angleController = new PIDController(0.4, 0, 0.05);
         this.angleController.setTolerance(precision);
         this.minSpeed = minSpeed;
         // each subsystem used by the command must be passed into the

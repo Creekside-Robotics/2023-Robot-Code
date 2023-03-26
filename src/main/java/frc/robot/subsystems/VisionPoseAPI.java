@@ -20,8 +20,10 @@ public class VisionPoseAPI extends SubsystemBase {
         var x = this.poseTable.getEntry("xPos").getDouble(0);
         var y = this.poseTable.getEntry("yPos").getDouble(0);
         var r = this.poseTable.getEntry("rPos").getDouble(0);
+        r += 0.1;
+        
 
-        if(x == 0 && y == 0 && r == 0){
+        if(x == 0 && y == 0){
             return null;
         } else {
             return new Pose2d(x, y, new Rotation2d(r));

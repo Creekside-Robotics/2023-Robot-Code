@@ -119,7 +119,8 @@ public class RobotContainer {
     this.autoBalance = new DriveToPosePID(drivetrain, drivetrain::getBestBalancePosition, 1, 0.02, true, 0.1);
 
     this.autoCommandChooser = new SendableChooser<Command>();
-    this.autoCommandChooser.setDefaultOption("Long: Single Pickup, Double Score, Tilt", new TripleThreatLong(drivetrain, lowerArm, upperArm, claw, intake, indexer, poseAPI));
+    this.autoCommandChooser.setDefaultOption("Short: Single Pickup, Single Score, Tilt", new TripleThreatLong(drivetrain, lowerArm, upperArm, claw, intake, indexer, poseAPI));
+    this.autoCommandChooser.addOption("Long: Single Pickup, Double Score, Tilt", new TripleThreatLong(drivetrain, lowerArm, upperArm, claw, intake, indexer, poseAPI));
     this.autoCommandChooser.addOption("Long: Double Pickup, Double Score", new TripleTreatObject(drivetrain, lowerArm, upperArm, claw, intake, indexer, poseAPI));
     SmartDashboard.putData(this.autoCommandChooser);
   }
@@ -147,50 +148,37 @@ public class RobotContainer {
     this.lowerArm.setDefaultCommand(this.holdLowerArm);
     this.upperArm.setDefaultCommand(this.holdUpperArm);
 
-    aButton.whileHeld(this.autoScoreOne);
-    aButton.whenReleased(this.retractArms);
-    xButton.whileHeld(this.autoScoreTwo);
-    xButton.whenReleased(this.retractArms);
-    yButton.whileHeld(this.autoScoreThree);
-    yButton.whenReleased(this.retractArms);
+    aButtonAlternate.whileHeld(this.autoScoreOne);
+    aButtonAlternate.whenReleased(this.retractArms);
+    xButtonAlternate.whileHeld(this.autoScoreTwo);
+    xButtonAlternate.whenReleased(this.retractArms);
+    yButtonAlternate.whileHeld(this.autoScoreThree);
+    yButtonAlternate.whenReleased(this.retractArms);
 
     bButton.whileHeld(this.autoPickup);
     bButton.whenReleased(this.indexObject);
 
-    rightBumper.whileHeld(
-            new ConditionalCommand(
-                    this.driveAwayIn,
-                    this.driveAwayOut,
-                    () -> this.claw.getState() == DoubleSolenoid.Value.kForward
-            )
-    );
-    leftBumper.whileHeld(
-            new ConditionalCommand(
-                    this.toPickupIn,
-                    this.toPickupOut,
-                    () -> this.claw.getState() == DoubleSolenoid.Value.kForward
-            )
-    );
-
     resetButton.whenPressed(this.resetPose);
-    endgameButton.whenPressed(this.autoBalance);
+    leftBumper.whileHeld(this.autoBalance);
+    rightBumper.whileHeld(new AutoDock(this.drivetrain));
+    rightBumper.whenReleased(this.indexObject);
 
-    aButtonAlternate.whileHeld(new FirstLevelScore(lowerArm, upperArm, claw));
-    aButtonAlternate.whenReleased(this.retractArms);
-    xButtonAlternate.whileHeld(new SecondLevelScore(lowerArm, upperArm, claw));
-    xButtonAlternate.whenReleased(this.retractArms);
-    yButtonAlternate.whileHeld(new ThirdLevelScore(lowerArm, upperArm, claw));
-    yButtonAlternate.whenReleased(this.retractArms);
+    aButton.whileHeld(new FirstLevelScore(lowerArm, upperArm, claw));
+    aButton.whenReleased(this.retractArms);
+    xButton.whileHeld(new SecondLevelScore(lowerArm, upperArm, claw));
+    xButton.whenReleased(this.retractArms);
+    yButton.whileHeld(new ThirdLevelScore(lowerArm, upperArm, claw));
+    yButton.whenReleased(this.retractArms);
 
     bButtonAlternate.whenPressed(new ExtendIntake(this.intake));
     bButtonAlternate.whenReleased(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
    
     leftBumperAlternate.whenPressed(new IndexObject(lowerArm, upperArm, claw, intake, indexer));
+    rightBumperAlternate.whileHeld(new IndexerPanic(indexer));
+    rightBumperAlternate.whenReleased(new SetIndexerMode(indexer, Indexer.Mode.Stopped));
   }
 
-  private void configureButtonBindings() {
-    
-  }
+  private void configureButtonBindings() {}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -10,9 +10,9 @@ public class SetDrivetrainOutput extends CommandBase {
     private final Pose2d movementVector;
     private final boolean fieldRelative;
 
-    public SetDrivetrainOutput(Drivetrain drivetrain, Pose2d movementVector, boolean fieldRelative) {
+    public SetDrivetrainOutput(Drivetrain drivetrain, Pose2d pose2d, boolean fieldRelative) {
         this.drivetrain = drivetrain;
-        this.movementVector = movementVector;
+        this.movementVector = pose2d;
         this.fieldRelative = fieldRelative;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)

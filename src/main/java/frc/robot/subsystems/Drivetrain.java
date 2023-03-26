@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Utils;
+import frc.robot.Utils.DynamicObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,8 +150,12 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public Pose2d getClosestPickupPosition(){
-        var closestObject = objectAPI.getNearestObject("");
-        var fieldRelativeTranslation = closestObject.getPose().rotateBy(getPose().getRotation()).plus(getPose().getTranslation());
+        var closestObject = objectAPI.getNearestObject(null);
+        if (closestObject == null){
+            closestObject = new DynamicObject("Cube", 0, 0);
+            System.out.print("hola");
+        }
+        var fieldRelativeTranslation = closestObject.getPose().rotateBy(getPose().getRotation().plus(new Rotation2d(-Math.PI/16))).plus(getPose().getTranslation());
         return new Pose2d(fieldRelativeTranslation, new Rotation2d(closestObject.getPose().getX(), closestObject.getPose().getY()).plus(getPose().getRotation()));
     }
 

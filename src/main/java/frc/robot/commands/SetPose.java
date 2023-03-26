@@ -22,7 +22,7 @@ public class SetPose extends InstantCommand {
 
     @Override
     public void initialize() {
-        var pose = this.visionPoseAPI.getPose();
+        var pose = this.visionPoseAPI.getNewPose();
         if (pose == null){
             this.drivetrain.setPose(this.defaultPose);
         } else if (this.defaultPose != null) {

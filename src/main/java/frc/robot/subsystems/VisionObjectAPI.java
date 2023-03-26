@@ -15,7 +15,7 @@ public class VisionObjectAPI extends SubsystemBase {
 
     public VisionObjectAPI() {
         this.networkTableInstance = NetworkTableInstance.getDefault();
-        this.objectTable = this.networkTableInstance.getTable("Object");
+        this.objectTable = this.networkTableInstance.getTable("Objects");
     }
 
     public Utils.DynamicObject getNearestObject(String objectType) {
@@ -25,7 +25,7 @@ public class VisionObjectAPI extends SubsystemBase {
         // objectType (name, x, and y) after obtaining the data from the NetworkTable
         // Current way just skips those entries in the for loop
 
-        var name = this.objectTable.getEntry("Name").getStringArray(null);
+        var name = this.objectTable.getEntry("Name").getStringArray(new String[]{});
         var x = this.objectTable.getEntry("xPos").getDoubleArray(new double[]{});
         var y = this.objectTable.getEntry("yPos").getDoubleArray(new double[]{});
 
@@ -39,7 +39,7 @@ public class VisionObjectAPI extends SubsystemBase {
             var translation = new Translation2d(x[i], y[i]);
             var distance = translation.getNorm();
 
-            if (distance > maxTranslation.getNorm()) {
+            if (distance < maxTranslation.getNorm()) {
                 maxTranslation = translation;
                 maxObjectId = i;
             }
